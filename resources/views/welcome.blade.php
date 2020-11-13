@@ -127,6 +127,12 @@
                     </div>
                 </div>
             </div> --}}
+        <div>
+    @foreach (App\Models\User::all() as $user)
+    <p>{{$user->email}}</p>
+@endforeach
+
+        </div>
         </div>
     </body>
 </html>

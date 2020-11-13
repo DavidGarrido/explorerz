@@ -16,6 +16,7 @@ mix.js('resources/js/app.js', 'public/js')
         require('postcss-import'),
         require('tailwindcss'),
     ])
+    .sass('resources/sass/main.scss', 'public/css')
     .webpackConfig(require('./webpack.config'));
 
 mix.browserSync('http://localhost:8081');

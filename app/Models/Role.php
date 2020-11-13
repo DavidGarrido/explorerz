@@ -9,6 +9,8 @@ class Role extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'slug', 'description', 'full-access'];
+
     public function users(){
         return $this->belongsToMany('App\Models\User')->withTimesTamps();
     }
