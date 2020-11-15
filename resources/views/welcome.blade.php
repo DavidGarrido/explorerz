@@ -127,12 +127,16 @@
                     </div>
                 </div>
             </div> --}}
-        <div>
-    @foreach (App\Models\User::all() as $user)
-    <p>{{$user->email}}</p>
-@endforeach
+            <div>
+            @foreach (App\Models\User::all() as $user)
+                <div class="flex w-full row-gap-5">
+                    <p class="p-5">{{$user->email}}</p>
+                    <p class="p-5">{{$user->name}}</p>
+                    <p class="p-5">{{$user->roles[0]->name}}</p>
+                </div>
+            @endforeach
 
-        </div>
+            </div>
         </div>
     </body>
 </html>
