@@ -9,7 +9,14 @@ class Course extends Model
 {
     use HasFactory;
 
+
     public function users (){
         return $this->belongsToMany('App\Models\User')->withTimestamps();
+    }
+    public function schedule () {
+        return $this->belongsToMany('App\Models\Schedule')->withTimestamps();
+    }
+    public function thematics (){
+        return $this->belongsToMany('App\Models\Thematic')->withTimestamps();
     }
 }

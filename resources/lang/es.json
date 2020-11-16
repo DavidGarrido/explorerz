@@ -25,5 +25,11 @@
     "Add additional security to your account using two factor authentication.":"Agregue seguridad adicional a su cuenta mediante la autenticación de dos factores.",
     "Two Factor Authentication":"Autenticación de dos factores",
     "Course Title":"Título del curso",
-    "Description":"Descripción"
+    "Description":"Descripción",
+    "Monday":"Lunes",
+    "Tuesday":"Martes",
+    "Wednesday":"Miércoles",
+    "Thursday":"Jueves",
+    "Friday":"Viernes",
+    "Saturday":"Sábado"
 }
