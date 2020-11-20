@@ -19,4 +19,8 @@ class Course extends Model
     public function thematics (){
         return $this->belongsToMany('App\Models\Thematic')->withTimestamps();
     }
+    public function model(){
+        return $this->belongsTo(Model_course::class);
+        // return $this->belongsToMany(Model_course::class, 'course_dimension_teacher')->withTimestamps();
+    }
 }

@@ -13,11 +13,16 @@ class CreateCoursesTable extends Migration
      */
     public function up()
     {
+        
+        Schema::create('model_courses', function (Blueprint $table) {
+            $table->id();
+            $table->string('group');
+            $table->timestamps();
+        });
+        
         Schema::create('courses', function (Blueprint $table) {
             $table->id();
-            $table->string('title');
-            $table->text('description');
-            $table->integer('capacity')->nullable();
+            $table->foreignId('model_id')->references('id')->on('model_courses')->onDelete('cascade');
             $table->timestamps();
         });
     }

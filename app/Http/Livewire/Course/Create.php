@@ -3,43 +3,36 @@
 namespace App\Http\Livewire\Course;
 
 use App\Models\Course;
-use App\Models\Role;
+use App\Models\Model_course;
 use Livewire\Component;
 
 class Create extends Component
 {
 
 
-    public $title, $description, $allcourses;
-    public $capacity = 0 ;
+    public $allcourses;
+    public $models;
+    public $model = 1;
 
 
 
 
     public function mount(){
 
-        $this->allcourses = auth()->user()->courses;
-
+        $this->allcourses = Course::all();
+        $this->models = Model_course::all();
         
 
     }
-    protected $rules = [
-        'title' => 'required',
-        'description' => 'required'
-    ];
 
 
     
     public function create(){
-        $this->validate();
 
             $course = new Course();
-            $course->title = $this->title;
-            $course->description = $this->description;
-            $course->capacity = $this->capacity;
+            $course->model_id = $this->model;
             $course->save();
 
-            $this->reset('title', 'description', 'capacity');
             $course->users()->attach(auth()->user()->id);
             $this->allcourses = auth()->user()->courses;
     }
