@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Course;
 
 use App\Models\Course;
 use App\Models\Role;
+use App\Models\Schedule;
 use Livewire\Component;
 
 class Show extends Component
@@ -17,6 +18,12 @@ class Show extends Component
     public $this_students = [];
     public $this_students_ids = [];
     public $students_disp = [];
+    public $show_stripe = '';
+    public $stripe;
+    public $autorize;
+
+    protected $listeners = ['show_stripe'];
+    protected $queryString = ['show_stripe' => ['except' => '']];
 
     public function mount(){
         $tutors = Role::find(2);
@@ -24,6 +31,17 @@ class Show extends Component
         $this->sync_tutors();
         $students = Role::find(4);
         $this->allstudents = $students->users;
+        $this->sync_students();
+        if ($this->show_stripe != '') {
+            $this->stripe = Schedule::find($this->show_stripe);
+        }
+        $this->autorize = $this->course->users()->find(auth()->user()->id);
+    }
+    public function show_stripe($id){
+        $this->reset_all();
+        $this->show_stripe = $id;
+        $this->stripe = Schedule::find($id);
+        $this->sync_tutors();
         $this->sync_students();
     }
     public function sync_users(){

@@ -10,17 +10,35 @@ class Create extends Component
 {
 
 
-    public $allcourses;
+    public $allcourses = [];
     public $models;
     public $model = 1;
+    public $show= 'all';
+    public $course;
+    public $active = '';
 
-
+    protected $queryString = [
+        "show"=>['except'=>''],
+        "active"=>['except'=>'']
+    ];
 
 
     public function mount(){
-
-        $this->allcourses = Course::all();
+        switch (auth()->user()->roles[0]->id) {
+            case 1:
+                $this->allcourses = Course::all();
+                break;
+            case 2:
+                $this->allcourses = auth()->user()->courses;
+                break;
+        }
         $this->models = Model_course::all();
+
+        if($this->active != ''){
+            $this->course = Course::find($this->active);
+        }else{
+            $this->show = 'all';
+        }
         
 
     }
@@ -35,6 +53,16 @@ class Create extends Component
 
             $course->users()->attach(auth()->user()->id);
             $this->allcourses = auth()->user()->courses;
+    }
+
+    public function show_course($course){
+        $this->course = Course::find($course);
+        $this->active = $course;
+        $this->show = 'course';
+    }
+    public function all(){
+        $this->show = 'all';
+        $this->active = '';
     }
 
 

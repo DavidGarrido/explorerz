@@ -14,13 +14,12 @@ class Course extends Model
         return $this->belongsToMany('App\Models\User')->withTimestamps();
     }
     public function schedule () {
-        return $this->belongsToMany('App\Models\Schedule')->withTimestamps();
+        return $this->belongsToMany(Schedule::class)->orderBy('day');
     }
     public function thematics (){
         return $this->belongsToMany('App\Models\Thematic')->withTimestamps();
     }
     public function model(){
         return $this->belongsTo(Model_course::class);
-        // return $this->belongsToMany(Model_course::class, 'course_dimension_teacher')->withTimestamps();
     }
 }

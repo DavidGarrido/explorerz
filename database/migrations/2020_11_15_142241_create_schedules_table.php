@@ -17,7 +17,7 @@ class CreateSchedulesTable extends Migration
             $table->id();
             $table->integer('day');
             $table->integer('start');
-            $table->integer('end');
+            $table->integer('dimension');
             $table->timestamps();
         });
     }

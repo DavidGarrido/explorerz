@@ -26,7 +26,7 @@ class UserFactory extends Factory
             'name' => $this->faker->name,
             'email' => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
-            'password' => '$2y$10$Lp4.3QI35z8neRB2ZhHDuepAsSgsfSm6a.lS1/ZU2FrdpbiPu/Sfi', // password
+            'password' => '$2y$10$DHf8pgZ5q3eSp4FPcbBDUuiTsv3bnVBCwYBRm.Zscge7KnHpHvaN6', // Explorerz2020
             'remember_token' => Str::random(10),
         ];
     }

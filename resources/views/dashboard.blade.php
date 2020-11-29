@@ -12,4 +12,5 @@
             </div>
         </div>
     </div> --}}
+    @livewire('navigation')
 </x-app-layout>

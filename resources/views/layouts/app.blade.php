@@ -18,6 +18,7 @@
 
         <!-- Scripts -->
         <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.js" defer></script>
+        <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
     </head>
     <body class="font-sans overflow-hidden text-gray-500">
         <div class="h-screen bg-gray-100 grid grid-rows-template">
@@ -30,12 +31,15 @@
             </header> --}}
 
             <!-- Page Content -->
-            <div class="flex">
+            <main id="content" class="bg-gray-200 h-full flex">
+                {{ $slot }}
+            </main>
+            {{--  <div class="flex">
                 @include('navigation.bar')
                 <div id="content" class="w-full overflow-auto p-2">
                     {{ $slot }}
                 </div>
-            </div>
+            </div>  --}}
         </div>
 
         @stack('modals')
