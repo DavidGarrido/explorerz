@@ -79,4 +79,10 @@ class User extends Authenticatable
     public function courses (){
         return $this->belongsToMany('App\Models\Course')->orderBy('id', 'DESC')->withTimestamps();
     }
+    public function parent(){
+        return $this->belongsTo(User::class, 'parent_id');
+    }
+    public function children(){
+        return $this->hasMany(User::class, 'parent_id');
+    }
 }

@@ -1,18 +1,25 @@
 <div class="w-full p-3  bg-gray-100 flex flex-col justify-end gap-2 relative">
+    
+    {{auth()->user()->parent}}
+    @foreach (auth()->user()->children as $student)
+        <p>{{$student->courses}}</p>
+    @endforeach
     @switch($show)
         @case('all')
-            <select wire:model="model">
-                @foreach ($models as $model)
-                    <option value="{{$model->id}}">{{$model->group}}</option>
-                @endforeach
-            </select>
-            @error('title')
-                <p class="text-red-600">{{$message}}</p>    
-            @enderror
-            @error('description')
-                <p class="text-red-600">{{$message}}</p>
-            @enderror
-            <button class="bg-gray-800 hover:bg-gray-900 p-2 rounded-md text-white w-40" wire:click="create">Crear</button>     
+            @can('haveaccess', 'course.create')
+                <select wire:model="model">
+                    @foreach ($models as $model)
+                        <option value="{{$model->id}}">{{$model->group}}</option>
+                    @endforeach
+                </select>
+                @error('title')
+                    <p class="text-red-600">{{$message}}</p>    
+                @enderror
+                @error('description')
+                    <p class="text-red-600">{{$message}}</p>
+                @enderror
+                <button class="bg-gray-800 hover:bg-gray-900 p-2 rounded-md text-white w-40" wire:click="create">Crear</button>  
+            @endcan   
             <div class="w-full p-3 rounded-lg bg-white mt-3">
                 <h1 class="text-xl">Mis Cursos</h1>
                 @if (count($allcourses) > 0)
