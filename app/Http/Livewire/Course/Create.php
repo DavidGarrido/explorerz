@@ -29,6 +29,8 @@ class Create extends Component
                 $this->allcourses = Course::all();
                 break;
             case 2:
+            case 3:
+            case 4:
                 $this->allcourses = auth()->user()->courses;
                 break;
         }

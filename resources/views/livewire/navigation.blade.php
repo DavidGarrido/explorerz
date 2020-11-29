@@ -6,6 +6,9 @@
                 <a class="block p-4 " wire:click.prevent="$set('content', 'cursos')" href="#">Cursos</a>
             </li>
             <li class="hover:bg-blue-700">
+                <a class="block p-4 " wire:click.prevent="$set('content', 'clubes')" href="#">Clubes</a>
+            </li>
+            <li class="hover:bg-blue-700">
                 <a class="block p-4 " wire:click.prevent="$set('content', 'settings')" href="#">Configuración</a>
             </li>
         </ul>
@@ -20,6 +23,9 @@
                 @break
             @case('settings')
                 @livewire('settings')
+                @break
+            @case('clubes')
+                @livewire('clubes')
                 @break
             @default
                 <p>Pagina no encontrada</p>

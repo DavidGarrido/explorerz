@@ -1,3 +1,3 @@
 <div>
-    {{-- Success is as dangerous as failure. --}}
+    <p>Vista de curso {{$course->id}} para teacher</p>
 </div>

@@ -45,7 +45,7 @@
                         @foreach ($schedule as $item)
                             @if ($item->day == $i && $item->start == $h)
                                 {{-- @livewire('schedule.stripe', ['stripe' => $item], key($item->id)) --}}
-                                <div class="w-full h-8 bg-red-500 cursor-pointer" wire:click="$emitTo('course.show','show_stripe',{{$item->id}})">
+                                <div class="w-full h-8 bg-red-500 cursor-pointer" wire:click="$emitTo('course.show.admin','show_stripe',{{$item->id}})">
                                     @switch($item->dimension)
                                         @case(1)  Corporal @break                                                
                                         @case(2)  Cognitiva @break                                                
