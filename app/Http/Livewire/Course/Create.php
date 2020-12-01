@@ -21,6 +21,7 @@ class Create extends Component
         "show"=>['except'=>''],
         "active"=>['except'=>'']
     ];
+    protected $listeners = ['show_course'];
 
 
     public function mount(){

@@ -1,4 +1,7 @@
 <div class="w-full p-3  bg-gray-100 flex flex-col justify-end gap-2 relative">
+    <div class="fixed inset-0 w-full h-16 flex justify-center items-center transform scale-0" wire:loading.class="transform scale-100">
+        <p class="text-red-500">Cargando...</p>
+    </div>
     
     {{auth()->user()->parent}}
     @foreach (auth()->user()->children as $student)

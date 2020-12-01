@@ -85,4 +85,7 @@ class User extends Authenticatable
     public function children(){
         return $this->hasMany(User::class, 'parent_id');
     }
+    public function usertable(){
+        return $this->morphTo();
+    }
 }

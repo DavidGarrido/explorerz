@@ -2,7 +2,6 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Course;
 use Livewire\Component;
 
 class Navigation extends Component
@@ -12,10 +11,12 @@ class Navigation extends Component
     protected $queryString = [
         "content" =>['except' => ''],
      ];
-    
+    protected $listeners = ['set_content_to_course'];
 
-
-
+    public function set_content_to_course($id){
+        $this->content = 'cursos';
+        $this->emitTo('course.create', 'show_course', $id);
+    }
     public function render()
     {
         return view('livewire.navigation');

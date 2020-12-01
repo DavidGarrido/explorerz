@@ -8,4 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class DataParent extends Model
 {
     use HasFactory;
+
+    public function users () {
+        return $this->morphMany(User::class, 'usertable');
+    }
 }

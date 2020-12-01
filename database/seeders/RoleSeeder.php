@@ -43,9 +43,9 @@ class RoleSeeder extends Seeder
         
 
         $role = new Role();        
-        $role->name = 'studen';
-        $role->slug = 'studen';
-        $role->description = 'Permisos de studen';
+        $role->name = 'student';
+        $role->slug = 'student';
+        $role->description = 'Permisos de student';
         $role['full-access'] = 'no';
         $role->save();
         for ($i=26; $i < 41; $i++) { 
