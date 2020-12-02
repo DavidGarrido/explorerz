@@ -57,6 +57,40 @@ class Create extends Component
             $course->users()->attach(auth()->user()->id);
             $this->allcourses = auth()->user()->courses;
     }
+    public function dimension_name($id)
+    {        
+        switch($id){
+            case  1: return 'Corporal'; break;
+            case  2: return 'Cognitiva'; break;
+            case  3: return 'Comunicativa'; break;
+            case  4: return 'Etica'; break;
+            case  5: return 'Estetica'; break;
+            case  6: return 'Actitudinal'; break;
+            case  7: return 'Valorativa'; break;
+            case  8: return 'Matemáticas'; break;
+            case  9: return 'Humanidades'; break;
+            case  10: return 'Ciencias Naturales';  break;
+            case  11: return 'Ciencias Sociales';  break;
+            case  12: return 'Educación Artística';  break;
+            case  13: return 'Educación Etica';  break;
+            case  14: return 'Educación Fisica';  break;
+            case  15: return 'Educación Religiosa';  break;
+            case  16: return 'Tecnologia e informatica';  break;
+            case  17: return 'Ciencias Politicas';  break;
+            case  18: return 'Filosofia'; break;
+        }
+    }
+    public function hour($hour){
+        if ($hour < 12) {
+            return $hour.' a.m';
+        }
+        if ($hour == 12) {
+            return $hour.' m';
+        }
+        if ($hour > 12) {
+            return ($hour-12).' p.m';
+        }
+    }
 
     public function show_course($course){
         $this->course = Course::find($course);

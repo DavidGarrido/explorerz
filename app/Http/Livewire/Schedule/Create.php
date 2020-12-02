@@ -24,6 +24,7 @@ class Create extends Component
         $schedule->day = $this->day;
         $schedule->start = $this->start;
         $schedule->dimension = $dim;
+        $schedule->user_id = auth()->user()->id;
         $schedule->save();
         $schedule->courses()->sync($this->course);
         $course = Course::find($this->course->id);

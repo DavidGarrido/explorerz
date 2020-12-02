@@ -79,6 +79,9 @@ class User extends Authenticatable
     public function courses (){
         return $this->belongsToMany('App\Models\Course')->orderBy('id', 'DESC')->withTimestamps();
     }
+    public function schedule(){
+        return $this->hasMany(Schedule::class);
+    }
     public function parent(){
         return $this->belongsTo(User::class, 'parent_id');
     }

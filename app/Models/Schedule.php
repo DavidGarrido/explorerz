@@ -15,4 +15,7 @@ class Schedule extends Model
     public function thematics(){
         return $this->belongsToMany('App\Models\Thematic')->withTimestamps();
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }

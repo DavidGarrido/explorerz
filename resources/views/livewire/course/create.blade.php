@@ -4,6 +4,34 @@
     </div>
     
     {{auth()->user()->parent}}
+
+    @if (auth()->user()->roles[0]->id == 2)
+        @for ($i = 1; $i < 7; $i++)
+            @switch($i)
+                @case(1) @php $day='Lunes' @endphp @break
+                @case(2) @php $day='Martes' @endphp @break
+                @case(3) @php $day='Miercoles' @endphp @break
+                @case(4) @php $day='Jueves' @endphp @break
+                @case(5) @php $day='Viernes' @endphp @break
+                @case(6) @php $day='Sabado' @endphp @break
+            @endswitch
+            <div class="w-full flex border-2 border-gray-200 shadow-sm bg-white">
+                <div class="w-1/12 flex items-center justify-center bg-gray-200">
+                    <p>{{$day}}</p>
+                </div>
+                <div class="w-11/12 flex flex-col divide-y divide-gray-200">
+                    @foreach (auth()->user()->schedule->where('day', $i)->sortBy('start') as $schedule)
+                        <div class="flex divide-x divide-gray-200">
+                            <p class="p-3 w-1/12">{{$this->hour($schedule->start)}}</p>
+                            <p class="p-3 w-2/12">{{$this->dimension_name($schedule->dimension)}}</p>
+                            <p class="p-3 w-2/12">{{$schedule->courses[0]->model->group}}</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endfor        
+    @endif
+
     @foreach (auth()->user()->children as $student)
         <p>{{$student->courses}}</p>
     @endforeach
