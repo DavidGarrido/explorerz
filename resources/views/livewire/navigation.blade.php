@@ -20,7 +20,10 @@
                 </li>   
                 <li class="hover:bg-blue-700">
                     <a href="#" class="block p-4" wire:click.prevent="$set('content', 'parents')">Padres</a>
-                </li>             
+                </li>          
+                <li class="hover:bg-blue-700">
+                    <a href="#" class="block p-4" wire:click.prevent="$set('content', 'request')">Solicitudes</a>
+                </li>
             @endcan
             <li class="hover:bg-blue-700">
                 <a class="block p-4 " wire:click.prevent="$set('content', 'settings')" href="#">Configuración</a>
@@ -49,6 +52,9 @@
                 @break
             @case('parents')
                 @livewire('parents')
+                @break
+            @case('request')
+                @livewire('request')
                 @break
             @default
                 <p>Pagina no encontrada</p>

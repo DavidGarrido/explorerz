@@ -47,7 +47,13 @@
                     <div class="flex justify-between  divide-x divide-gray-200 cursor-pointer hover:bg-gray-300" >
                         <p class="py-5 px-3 w-4/12 text-left font-bold">{{$user->email}}</p>
                         <p class="py-5 px-3 w-4/12 text-left">{{$user->name}}</p>
-                        <p class="py-5 px-3 w-2/12 ">{{$user->roles[0]->name}}</p>
+                        <p class="py-5 px-3 w-2/12 ">
+                            @if (count($user->roles)>0)
+                                {{$user->roles[0]->name}}
+                            @else
+                                No definido                                
+                            @endif
+                        </p>
                         <p class="py-5 px-3 w-2/12 ">Explorerz2020</p>
                     </div>
                 @endforeach

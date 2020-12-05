@@ -8,7 +8,10 @@
         <title>
             {{ config('app.name', 'Laravel') }}
             @auth
-                {{auth()->user()->roles[0]->name}}
+                @if (count(auth()->user()->roles)>0)
+                    {{__(auth()->user()->roles[0]->name)}}
+                @endif
+                
             @endauth
         </title>
 

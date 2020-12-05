@@ -91,4 +91,10 @@ class User extends Authenticatable
     public function usertable(){
         return $this->morphTo();
     }
+    
+    public function request()
+    {
+        return $this->hasMany(Request::class);
+    }
+    
 }
