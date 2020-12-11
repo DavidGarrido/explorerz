@@ -18,7 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/storage', function(){
-    Artisan::call('storage:link');
+    $targetFolder = storage_path("app/public");
+    $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
+    symlink($targetFolder, $linkFolder);
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/cursos', function(){
