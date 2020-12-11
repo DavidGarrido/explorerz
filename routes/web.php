@@ -22,6 +22,13 @@ Route::get('/storage', function(){
     $linkFolder = $_SERVER['DOCUMENT_ROOT'] . '/storage';
     symlink($targetFolder, $linkFolder);
 });
+Route::get('/migrate', function(){
+    Artisan::call('migrate',
+        array(
+        '--path' => 'database/migrations',
+        '--database' => 'mysql',
+        '--force' => true));
+});
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/cursos', function(){
     return view('cursos.list');
