@@ -44,7 +44,6 @@
                 </div>
                 
             </div>
-            {{$phone}}
             <div class="w-full flex items-center  h-10  overflow-hidden ">
                 <p class="h-10 flex items-center justify-start px-3  w-3/12  font-roboto font-bold">Departamento:</p>
                 <div class="w-9/12 h-10 flex items-center">
@@ -73,22 +72,26 @@
             x-on:livewire-upload-error="isUploading = false"
             x-on:livewire-upload-progress="progress = $event.detail.progress, bar()"
             >
-                <!-- File Input -->
-                <p>Hoja de vida:</p>
-                <input type="file" class="transform scale-0 absolute " wire:model="hv" id="file" accept="application/pdf" >
-                <label for="file" class="relative border border-dashed rounded-lg border-indigo-400 cursor-pointer bg-white text-indigo-400 flex justify-center items-center overflow-hidden h-10 opacity-75 hover:opacity-100  ">
-                    <p>Seleccionar Archivo</p>
-                    <div class="w-full h-full absolute inset-0 ">
-                        <div id="bar" class="h-full bg-green-500 flex items-center justify-center text-white overflow-hidden  @if($hv) w-full @else w-0 @endif "  x-text="progress">
+                @if ( isset(auth()->user()->usertable->hv) && auth()->user()->usertable->hv != null)
+                    <a target="_blank" href="{{asset(auth()->user()->usertable->hv)}}">Hoja de vida</a>
+                @else
+                    <!-- File Input -->
+                    <p>Hoja de vida:</p>
+                    <input type="file" class="transform scale-0 absolute " wire:model="hv" id="file" accept="application/pdf" >
+                    <label for="file" class="relative border border-dashed rounded-lg border-indigo-400 cursor-pointer bg-white text-indigo-400 flex justify-center items-center overflow-hidden h-10 opacity-75 hover:opacity-100  ">
+                        <p>Seleccionar Archivo</p>
+                        <div class="w-full h-full absolute inset-0 ">
+                            <div id="bar" class="h-full bg-green-500 flex items-center justify-center text-white overflow-hidden  @if($hv) w-full @else w-0 @endif "  x-text="progress">
+                            </div>
                         </div>
-                    </div>
-                </label>
+                    </label>
+                    <button type="submit" x-show="charget">Guardar</button>
+                @endif
                 <div id="visor_modal" class="fixed  inset-0 bg-black bg-opacity-50 flex flex-col items-center justify-center p-20" x-show="visor">
                     <p>Documento cargado:</p>
                     <i class="fas fa-times absolute top-10 right-10 cursor-pointer" @click="visor=false"></i>
                     <div id="visor" class="w-full h-full"></div>
                 </div>
-                <button type="submit" x-show="charget">Guardar</button>
             </div>
         </form>
     </div>

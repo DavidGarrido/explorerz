@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Teacher;
 
 use App\Models\Departamento;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Intervention\Image\ImageManagerStatic as Image;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -28,7 +29,16 @@ class Data extends Component
         // $this->dimensions = getimagesize($this->photo->path());
         $this->validate();
 
-        $this->hv->store('hvs');
+
+
+        $this->hv->storeAs('public/hvs/'.auth()->user()->id,'hoja_de_vida'.'.pdf');
+        
+
+        
+        auth()->user()->usertable->hv = 'storage/hvs/'.auth()->user()->id.'/hoja_de_vida.pdf';
+        auth()->user()->usertable->save();
+        $this->reset(['hv']);
+        
 
         
     }
