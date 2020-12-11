@@ -20,7 +20,9 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             PermissionSeeder::class,
             ModelSeeder::class,
-            DimensionSeeder::class
+            DimensionSeeder::class,
+            DepartamentoSeeder::class,
+            MunicipioSeeder::class
         ]);
         
     }

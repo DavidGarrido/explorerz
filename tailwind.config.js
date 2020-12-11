@@ -11,6 +11,8 @@ module.exports = {
         extend: {
             fontFamily: {
                 sans: ['Nunito', ...defaultTheme.fontFamily.sans],
+                roboto:['Roboto'],
+                dokdo: ['East Sea Dokdo']
             },
             gridTemplateRows: {
                 'template': '4rem 1fr',

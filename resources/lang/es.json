@@ -35,5 +35,7 @@
     "student":"Estudiante",
     "teacher":"Profesor",
     "parent":"Padre",
-    "admin":"administrador"
+    "admin":"administrador",
+    "Men":"Hombre",
+    "Women":"Mujer"
 }
