@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/storage', function(){
+    Artisan::call('storage:link');
 });
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/cursos', function(){
