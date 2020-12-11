@@ -26,11 +26,9 @@ class Data extends Component
     public function save()
     {
         // $this->dimensions = getimagesize($this->photo->path());
-        // $this->validate([
-        //     'photo' => 'image|max:1024', // 1MB Max
-        // ]);
+        $this->validate();
 
-        // $this->photo->store('photos');
+        $this->hv->store('hvs');
 
         
     }
