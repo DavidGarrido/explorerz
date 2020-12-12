@@ -22,7 +22,7 @@
         </style>
     </head>
     <body>
-        <div class=" min-h-screen bg-gray-100 dark:bg-gray-900 p-20">
+        <div class=" min-h-screen bg-gray-100 dark:bg-gray-900 p-3 md:p-20">
             @if (Route::has('login'))
                 <div class="block fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -37,14 +37,14 @@
                 </div>
             @endif
             <div class="w-full divide-y divide-gray-200 border-2 border-gray-200 shadow-xl">
-                <div class="flex justify-between  divide-x divide-gray-200 text-indigo-500" >
-                    <p class=" font-bold py-5 px-3 w-4/12 text-left">Email</p>
-                    <p class=" font-bold py-5 px-3 w-4/12 text-left">Nombre</p>
-                    <p class=" font-bold py-5 px-3 w-2/12 ">Rol</p>
-                    <p class=" font-bold py-5 px-3 w-2/12 ">Contraseña</p>
+                <div class="flex flex-col md:flex-row justify-between  divide-x divide-gray-200 text-indigo-500" >
+                    <p class=" font-bold p-1 md:py-5 px-3 w-4/12 text-left">Email</p>
+                    <p class=" font-bold p-1 md:py-5 px-3 w-4/12 text-left">Nombre</p>
+                    <p class=" font-bold p-1 md:py-5 px-3 w-2/12 ">Rol</p>
+                    <p class=" font-bold p-1 md:py-5 px-3 w-2/12 ">Contraseña</p>
                 </div>
                 @foreach (App\Models\User::all() as $user)
-                    <div class="flex justify-between  divide-x divide-gray-200 cursor-pointer hover:bg-gray-300" >
+                    <div class="flex flex-col md:flex-row justify-between  divide-x divide-gray-200 cursor-pointer hover:bg-gray-300" >
                         <p class="py-5 px-3 w-4/12 text-left font-bold">{{$user->email}}</p>
                         <p class="py-5 px-3 w-4/12 text-left">{{$user->name}}</p>
                         <p class="py-5 px-3 w-2/12 ">
