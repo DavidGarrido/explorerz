@@ -66,6 +66,7 @@
             </div>
             @error('photo') <span class="error">{{ $message }}</span> @enderror
             <div
+            class="flex"
             x-data="data()"
             x-on:livewire-upload-start="isUploading = true, progress = 0"
             x-on:livewire-upload-finish=" charget = true, preview()"
@@ -73,7 +74,10 @@
             x-on:livewire-upload-progress="progress = $event.detail.progress, bar()"
             >
                 @if ( isset(auth()->user()->usertable->hv) && auth()->user()->usertable->hv != null)
-                    <a target="_blank" href="{{asset(auth()->user()->usertable->hv)}}">Hoja de vida</a>
+                    <a target="_blank" href="{{storage_path()}}" class="flex flex-col items-center gap-1 hover:text-gray-200">
+                        <i class="fas fa-file-pdf text-6xl"></i>
+                        <span class="text-xs">Hoja de vida.pdf</span>
+                    </a>
                 @else
                     <!-- File Input -->
                     <p>Hoja de vida:</p>
