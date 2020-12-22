@@ -16,3 +16,8 @@
   right: -5px;
 }
 
+.last_course:checked + label {
+  background-color: orangered;
+  color: whitesmoke;
+}
+
