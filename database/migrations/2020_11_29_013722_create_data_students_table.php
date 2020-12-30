@@ -15,6 +15,15 @@ class CreateDataStudentsTable extends Migration
     {
         Schema::create('data_students', function (Blueprint $table) {
             $table->id();
+            $table->string('full_name')->nullable();
+            $table->enum('type_document',['c.c','t.i','r.c','c.e'])->nullable();
+            $table->bigInteger('number_document')->nullable();
+            $table->bigInteger('utc_nacimiento')->nullable();
+            $table->integer('age')->nullable();
+            $table->enum('sex',['male','female'])->nullable();
+            $table->enum('size',['2','4','6','8','10','12','14','16','xs','s','m','l','xl'])->nullable();
+            $table->string('eps')->nullable();
+            $table->string('last_certificated')->nullable();
             $table->timestamps();
         });
     }
