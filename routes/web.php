@@ -23,7 +23,7 @@ Route::get('/storage', function(){
     symlink($targetFolder, $linkFolder);
 });
 Route::get('/migrate', function(){
-    Artisan::call('migrate',
+    Artisan::call('migrate:fresh --seed',
         array(
         '--path' => 'database/migrations',
         '--database' => 'mysql',

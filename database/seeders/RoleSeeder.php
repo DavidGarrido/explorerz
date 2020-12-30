@@ -21,7 +21,7 @@ class RoleSeeder extends Seeder
         $role['full-access'] = 'yes';
         $role->save();
 
-        $role->users()->sync([1,2,3]);
+        // $role->users()->sync([1,2,3]);
 
         $role = new Role();
         $role->name = 'teacher';
@@ -29,7 +29,7 @@ class RoleSeeder extends Seeder
         $role->description = 'Permisos de teacher';
         $role['full-access'] = 'no';
         $role->save();
-        $role->users()->sync([4,5,6,7,8,9,10]);
+        // $role->users()->sync([4,5,6,7,8,9,10]);
 
         $role = new Role();
         $role->name = 'parent';
@@ -37,9 +37,9 @@ class RoleSeeder extends Seeder
         $role->description = 'Permisos de parent';
         $role['full-access'] = 'no';
         $role->save();
-        for ($i=11; $i < 26; $i++) { 
-            $role->users()->attach($i);
-        }
+        // for ($i=11; $i < 26; $i++) { 
+        //     $role->users()->attach($i);
+        // }
         
 
         $role = new Role();        
@@ -48,8 +48,8 @@ class RoleSeeder extends Seeder
         $role->description = 'Permisos de student';
         $role['full-access'] = 'no';
         $role->save();
-        for ($i=26; $i < 41; $i++) { 
-            $role->users()->attach($i);
-        }
+        // for ($i=26; $i < 41; $i++) { 
+        //     $role->users()->attach($i);
+        // }
     }
 }
