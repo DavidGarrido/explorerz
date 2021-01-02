@@ -1,4 +1,4 @@
-<div class=" w-full flex md:items-center justify-center relative z-0 overflow-auto bg-blue-500" x-data="{open:false}">
+<div class=" w-full flex md:items-center justify-center relative z-0 overflow-auto bg-blue-500 " x-data="{open:false}">
     @if (count(auth()->user()->request)>0)
         @switch(auth()->user()->request[0]->state)
             @case(1)
@@ -15,8 +15,36 @@
                             @break
                     @endswitch
                 @else
-                    <div>
-                        <p>Tienes una Solicitud de {{__(auth()->user()->request[0]->role->name)}} pendiente</p>
+                    <div class="flex flex-col text-white h-full w-full items-center bg-cover bg-center" style="background-image: url({{asset('./img/student-new.jpg')}})">
+                        <p class="h-1/12 text-xl font-bold flex items-center w-full justify-center bg-black bg-opacity-25">Tienes una Solicitud de {{__(auth()->user()->request[0]->role->name)}} pendiente</p>
+                        @switch(auth()->user()->request[0]->role->id)
+                            @case(4)
+                                @if (!isset(auth()->user()->usertable->last_certificated) || auth()->user()->usertable->last_certificated == null)
+                                    <div class="flex w-full h-11/12 bg-black bg-opacity-25">
+                                        <div class="w-1/2 p-5 overflow-auto flex flex-col justify-end items-end text-2xl font-bold">
+                                            <p>Nuestros administradores son muy buenos, pero con tu ayuda serán mejores.</p>
+                                            <p>Completa los siguientes datos para darles una mano. <i class="fas fa-hand-point-right"></i> </p>
+                                        </div>
+                                        <div class="w-1/2 py-3 px-10 overflow-auto scroll">
+                                            @livewire('student.form-data')
+                                        </div>
+                                    </div>
+                                @else
+                                    <div class="bg-black bg-opacity-25 flex items-center justify-center w-full h-full font-bold">
+                                        <h1 class="font-roboto text-4xl w-1/4 text-center">Tenemos tu informacion, uno de Nuestros administradores se encargara de Validarla.</h1>
+                                    </div>
+                                @endif
+                                @break
+                            @case(2)
+                                    {{auth()->user()->usertable}}
+                                    @if (isset(auth()->user()->usertable()->hv))
+                                        
+                                    @endif
+                                
+                                @break
+                            @default
+                                
+                        @endswitch
                     </div>
                 @endif                
                 @break

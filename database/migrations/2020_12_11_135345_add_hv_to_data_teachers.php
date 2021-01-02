@@ -14,7 +14,6 @@ class AddHvToDataTeachers extends Migration
     public function up()
     {
         Schema::table('data_teachers', function (Blueprint $table) {
-            $table->string('hv')->nullable()->after('id');
         });
     }
 

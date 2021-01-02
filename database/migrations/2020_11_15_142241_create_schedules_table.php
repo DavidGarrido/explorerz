@@ -18,7 +18,7 @@ class CreateSchedulesTable extends Migration
             $table->integer('day');
             $table->integer('start');
             $table->integer('dimension');
-            $table->foreignId('user_id')->references('id')->on('users')->nullable();
+            $table->foreignId('user_id')->nullable()->references('id')->on('users');
             $table->timestamps();
         });
     }

@@ -8,9 +8,17 @@ use Livewire\Component;
 class Request extends Component
 {
     public function accept(ModelsRequest $request){
-        $request->user->roles()->sync($request->role_id);
-        $request->state = 2;
-        $request->save();
+        try {
+            $request->user->roles()->sync($request->role_id);
+            $request->state = 2;
+            $request->save();
+            $this->emitTo('navigation','setRequest');
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
+    public function download($route){
+        return response()->download(storage_path($route));
     }
     public function refuse(ModelsRequest $request){
         
@@ -18,7 +26,7 @@ class Request extends Component
     public function render()
     {
         return view('livewire.request',[
-            'request' => ModelsRequest::where(['state'=>1,'type'=>2])->get()
+            'request' => ModelsRequest::where(['state'=>1])->get()
         ]);
     }
 }

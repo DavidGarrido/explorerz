@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             ModelSeeder::class,
             DimensionSeeder::class,
             DepartamentoSeeder::class,
-            MunicipioSeeder::class
+            MunicipioSeeder::class,
+            UserSeeder::class,
         ]);
         
     }

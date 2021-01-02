@@ -24,6 +24,8 @@ class CreateDataStudentsTable extends Migration
             $table->enum('size',['2','4','6','8','10','12','14','16','xs','s','m','l','xl'])->nullable();
             $table->string('eps')->nullable();
             $table->string('last_certificated')->nullable();
+            $table->string('address')->nullable();
+            $table->bigInteger('phone')->nullable();
             $table->timestamps();
         });
     }
