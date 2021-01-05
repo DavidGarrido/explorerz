@@ -35,6 +35,17 @@ class Admin extends Component
             $this->stripe = Schedule::find($this->show_stripe);
         }
     }
+    public function setColor($color){
+        try {            
+            $this->course->color = $color;
+            $this->course->save();
+            $this->emitTo('schedule.create','setColor');
+            $this->emitTo('schedule.stripe', 'refresh');
+            $this->sync_users();
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
+    }
     
     public function show_stripe($id){
         $this->reset_all();

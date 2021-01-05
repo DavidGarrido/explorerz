@@ -12,8 +12,8 @@ class Schedule extends Model
     public function courses (){
         return $this->belongsToMany('App\Models\Course')->withTimestamps();
     }
-    public function thematics(){
-        return $this->belongsToMany('App\Models\Thematic')->withTimestamps();
+    public function activities(){
+        return $this->belongsToMany('App\Models\Activity')->withTimestamps();
     }
     public function user(){
         return $this->belongsTo(User::class);

@@ -14,8 +14,14 @@ class Create extends Component
     public $dimension;
     public $schedule;
 
+    protected $listeners = ['setColor'];
+
     public function mount ($course){
         $this->schedule = $course->schedule;
+    }
+    public function setColor(){
+        $course = Course::find($this->course->id);
+        $this->course = $course;
     }
 
 

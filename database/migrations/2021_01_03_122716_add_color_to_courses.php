@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateThematicsTable extends Migration
+class AddColorToCourses extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,8 @@ class CreateThematicsTable extends Migration
      */
     public function up()
     {
-        Schema::create('thematics', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->text('description');
-            $table->timestamps();
+        Schema::table('courses', function (Blueprint $table) {
+            $table->text('color')->nullable()->after('model_id');
         });
     }
 
@@ -28,6 +25,8 @@ class CreateThematicsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('thematics');
+        Schema::table('courses', function (Blueprint $table) {
+            //
+        });
     }
 }

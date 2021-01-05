@@ -8,7 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Activity extends Model
 {
     use HasFactory;
-    public function thematics(){
-        return $this->belongsToMany('App\Models\Thematic')->withTimestamps();
+
+    protected $fillable = ['name', 'description', 'utc_inicial', 'utc_final', 'day'];
+
+    public function schedule(){
+        return $this->belongsToMany('App\Models\Schedule')->withTimestamps();
     }
 }

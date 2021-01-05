@@ -1,4 +1,4 @@
-<div class="text-gray-500">
+<div class="text-gray-500 h-full">
     @if ($autorize != null)
         @switch(auth()->user()->roles[0]->id)
             @case(1)

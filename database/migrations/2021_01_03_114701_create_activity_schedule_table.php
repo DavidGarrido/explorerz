@@ -2,9 +2,10 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Schema\ForeignIdColumnDefinition;
 use Illuminate\Support\Facades\Schema;
 
-class CreateActivityThematicTable extends Migration
+class CreateActivityScheduleTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +14,10 @@ class CreateActivityThematicTable extends Migration
      */
     public function up()
     {
-        Schema::create('activity_thematic', function (Blueprint $table) {
+        Schema::create('activity_schedule', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('activity_id')->references('id')->on('activities')->onDelete('cascade');
-            $table->foreignId('thematic_id')->references('id')->on('thematics')->onDelete('cascade');
+            $table->foreignId('activity_id')->references('id')->on('activities');
+            $table->foreignId('schedule_id')->references('id')->on('schedules');
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ class CreateActivityThematicTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('activity_thematic');
+        Schema::dropIfExists('activity_schedule');
     }
 }

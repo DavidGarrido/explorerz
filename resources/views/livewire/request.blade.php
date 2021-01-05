@@ -19,6 +19,14 @@
                     </p>
                     <p class="w-2/12 px-3 flex items-center">
                         {{__($one_request->role->name)}}
+                        @switch($one_request->type)
+                            @case(1)
+                                Nuevo
+                                @break
+                            @case(2)
+                                Vinculado
+                                @break                                
+                        @endswitch
                     </p>
                     <div class="w-2/12 p-3 flex flex-col gap-1">
                         @if (isset($one_request->user->usertable->full_name) && $one_request->user->usertable->full_name != null)
@@ -98,16 +106,33 @@
                                 <p>E.P.S</p>
                             </div>
                         @endif
-                        @if (isset($one_request->user->usertable->last_certificated) && $one_request->user->usertable->last_certificated != null)
-                            <div class="flex gap-1 text-sm text-green-500 items-center underline">
-                                <i class="fas fa-check "></i>
-                                <a href="#" wire:click.prevent="download('{{$one_request->user->usertable->last_certificated}}')">Ultimo Certificado.</a>
-                            </div>
-                        @else
-                            <div class="flex gap-1 text-sm text-red-500 items-center">
-                                <i class="fas fa-times"></i>
-                                <p>Nombre Completo</p>
-                            </div>
+                        @if ($one_request->role_id == 4)                            
+                            @if (isset($one_request->user->usertable->last_certificated) && $one_request->user->usertable->last_certificated != null)
+                                <div class="flex gap-1 text-sm text-green-500 items-center underline">
+                                    <i class="fas fa-check "></i>
+                                    <a href="#" wire:click.prevent="download_certificated('{{$one_request->user->usertable->last_certificated}}',{{$one_request->user->id}})">Ultimo Certificado.</a>
+                                    <a href="{{route('certificate',[$one_request->user->id, $one_request->user->usertable->last_certificated])}}" target="blanck">Ver</a>
+                                </div>
+                            @else
+                                <div class="flex gap-1 text-sm text-red-500 items-center">
+                                    <i class="fas fa-times"></i>
+                                    <p>Ultimo Certificado</p>
+                                </div>
+                            @endif
+                        @endif
+                        @if ($one_request->role_id == 2)                    
+                            @if (isset($one_request->user->usertable->hv) && $one_request->user->usertable->hv != null)
+                                <div class="flex gap-1 text-sm text-green-500 items-center underline">
+                                    <i class="fas fa-check "></i>
+                                    <a href="#" wire:click.prevent="download('{{$one_request->user->usertable->hv}}',{{$one_request->user->id}})">Hoja de Vida.</a>
+                                    <a target="blanck" href="{{route('viewer',[$one_request->user->id, $one_request->user->usertable->hv])}}">ver</a>
+                                </div>
+                            @else
+                                <div class="flex gap-1 text-sm text-red-500 items-center">
+                                    <i class="fas fa-times"></i>
+                                    <p>Hoja de Vida</p>
+                                </div>
+                            @endif                            
                         @endif
                     </div>
                     <div class="flex-1 px-3 flex items-center gap-3">

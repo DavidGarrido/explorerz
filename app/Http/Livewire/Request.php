@@ -17,9 +17,12 @@ class Request extends Component
             //throw $th;
         }
     }
-    public function download($route){
-        return response()->download(storage_path($route));
+    public function download($route,$user){
+        return response()->download(storage_path('app/hvs/'.$user.'/'.$route));
     }
+    public function download_certificated($route,$user){
+        return response()->download(storage_path('app/certificated/'.$user.'/last_certificated/'.$route));
+    }    
     public function refuse(ModelsRequest $request){
         
     }

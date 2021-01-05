@@ -2,26 +2,35 @@
 
 namespace App\Http\Livewire\Course;
 
+use App\Models\Activity;
 use App\Models\Course;
 use App\Models\Model_course;
+use App\Models\Schedule;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class Create extends Component
 {
+    use WithFileUploads;
 
 
     public $allcourses = [];
+    public $color = '#3B82F6';
     public $models;
     public $model = 1;
     public $show= 'all';
     public $course;
     public $active = '';
+    public $today, $utc_inicial, $utc_final,$show_init = null;
+    public $schedule, $create_activity = false, $activity_day, $material = [], $title, $description, $start, $end, $tasks = [];
 
     protected $queryString = [
         "show"=>['except'=>''],
-        "active"=>['except'=>'']
+        "active"=>['except'=>''],
+        "show_init"
     ];
     protected $listeners = ['show_course'];
+
 
 
     public function mount(){
@@ -43,15 +52,19 @@ class Create extends Component
             $this->show = 'all';
         }
         
+        $this->today = time();
+        $this->utc_inicial = $this->today-(date('N')*86400)-((date('G')*3600)+(date('i')*60)+date('s'));
+        $this->utc_final = $this->utc_inicial+604800;
+        if ($this->show_init == null) {
+            $this->show_init = $this->utc_inicial;
+        }
 
     }
-
-
-    
     public function create(){
 
             $course = new Course();
             $course->model_id = $this->model;
+            $course->color = $this->color;
             $course->save();
 
             $course->users()->attach(auth()->user()->id);
@@ -101,10 +114,61 @@ class Create extends Component
         $this->show = 'all';
         $this->active = '';
     }
+    public function activity_agree(Schedule $schedule, $day){
+        $this->create_activity = true;
+        $this->schedule = $schedule;
+        $this->activity_day = $day;
+        //2021-01-04T19:44
+        $start = $day+($schedule->start*3600);
+        $this->start = date('Y-m-d',$start).'T'.date('H:i',$start);
+        $this->end = date('Y-m-d',($start+3600)).'T'.date('H:i',($start+3600));
+    }
+    public function agg_material(){
+        // $item = count($this->material);
+        // $this->material[$item]['url'] = '';
+        array_push($this->material, ['url' => null,'file' => null, 'description'=>null]);
+    }
+    public function remove_material($pos){
+        unset($this->material[$pos]);
+    }
+    public function agg_tasks(){
+        array_push($this->tasks, ['work' => null,'file' => 'yes','evaluate' => 'yes','points' => 5]);
+    }
+    public function cancel_activity(){
+        $this->create_activity = false;
+        $this->reset(['schedule','activity_day','title','description','start','end']);
+        $this->material = [];
+        $this->tasks = [];
+    }
+    public function activity_store(){
+        $this->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'start' => 'required',
+            'end' => 'required',
+        ]);
 
+        try {
+            $day = $this->activity_day+($this->schedule->start*3600);
+            $activity = Activity::create([
+                'name' => $this->title,
+                'description' => $this->description,
+                'utc_inicial' => strtotime($this->start),
+                'utc_final' => strtotime($this->end),
+                'day' => $day
+            ]);
+            $this->schedule->activities()->attach($activity);
+            $this->cancel_activity();
+            
+        } catch (\Throwable $th) {
+            dd($th);
+        }
 
+    }
     public function render()
     {
-        return view('livewire.course.create');
+        return view('livewire.course.create',[
+            'materials' => $this->material
+        ]);
     }
 }

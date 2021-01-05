@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,15 @@ Route::get('/migrate', function(){
         '--database' => 'mysql',
         '--force' => true));
 });
+Route::middleware(['auth:sanctum', 'verified'])->get('/view/{user_id}/{file}', function ($user_id,$file){
+    return Storage::response('hvs/'.$user_id.'/'.$file);
+})->name('viewer');
+Route::middleware(['auth:sanctum', 'verified'])->get('/certificate/{user_id}/{file}', function ($user_id,$file){
+    return Storage::response('certificated/'.$user_id.'/last_certificated/'.$file);
+    // return response('hola');
+})->name('certificate');
+
+
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/cursos', function(){
     return view('cursos.list');

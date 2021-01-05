@@ -36,9 +36,17 @@
                                 @endif
                                 @break
                             @case(2)
-                                    {{auth()->user()->usertable}}
-                                    @if (isset(auth()->user()->usertable()->hv))
-                                        
+                                    @if (isset(auth()->user()->usertable) && auth()->user()->usertable->hv == null)
+                                        <div class="w-full flex justify-end p-5 h-11/12 bg-black bg-opacity-25">
+                                            <div class="flex-1">
+                                                <h1 class="font-roboto font-bold text-3xl">Nuestros Asesores son muy Agiles.</h1>
+                                                <p class="text-2xl">Pero necesitamos de tu ayuda.</p>
+                                                <p class="text-5xl">Completa el formulario para agilizar tu solicitud.</p>
+                                            </div>
+                                            <div class="w-1/4 p-5 bg-blue-500 rounded-lg text-gray-600">
+                                                @livewire('teacher.form-data')                                        
+                                            </div>
+                                        </div>
                                     @endif
                                 
                                 @break

@@ -1,5 +1,5 @@
-<div>
-    <div class=" w-full ">
+<div class="flex gap-3 items-center">
+    <div class=" w-full">
             <p class="text-2xl">
             @switch($stripe->dimension)
                 @case(1)  Corporal @break                                                
@@ -23,13 +23,15 @@
             @endswitch
         </p>
     </div>
-    <select wire:model.lazy="teacher">
+    <p>Instructor:</p>
+    <select wire:model.lazy="teacher" class="p-2 rounded-md border border-gray-300">
         @foreach ($teachers as $teacher)
             @if ($teacher->roles[0]->id == 2 || $teacher->roles[0]->id == 1)
                 <option value="{{$teacher->id}}">{{$teacher->name}}</option>
             @endif
         @endforeach
     </select>
-    <button wire:click="save">Guardar</button>
+    
+    <button wire:click="save" class="text-white p-3 rounded-md" style="background-color: {{$stripe->courses[0]->color}}">Guardar</button>
         
 </div>
