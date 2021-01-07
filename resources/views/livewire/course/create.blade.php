@@ -129,8 +129,8 @@
                 @endif
             </div>
             @for ($i = $show_init+86400; $i < ($show_init+604800); $i+=86400)
-                <div class="w-full flex flex-col border-2 border-gray-200 shadow-sm bg-white h-full">
-                    <div class="w-full flex items-center justify-center bg-gray-200 h-1/12">
+                <div class="w-full flex flex-col rounded-lg shadow-sm bg-white h-full">
+                    <div class="w-full flex items-center justify-center  h-1/12">
                         <p class="p-3">{{__(date('l',$i))}} - {{date('d',$i)}} </p>
                     </div>
                     <div class="w-full h-11/12 overflow-auto p-1">

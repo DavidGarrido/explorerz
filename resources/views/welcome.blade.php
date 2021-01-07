@@ -22,7 +22,7 @@
         </style>
     </head>
     <body>
-        <div class=" min-h-screen bg-gray-900 dark:bg-gray-900 p-3 md:p-28 text-gray-500">
+        <div class=" min-h-screen  p-3 md:p-28 text-gray-500">
             @if (Route::has('login'))
                 <div class="block fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -36,7 +36,7 @@
                     @endif
                 </div>
             @endif
-            <div class="w-full divide-y divide-gray-600 shadow-xl bg-gray-700 rounded-lg overflow-hidden">
+            {{--  <div class="w-full divide-y divide-gray-600 shadow-xl bg-gray-700 rounded-lg overflow-hidden">
                 <div class="flex flex-col md:flex-row justify-between  divide-x divide-gray-600 text-indigo-500" >
                     <p class=" font-bold p-1 md:py-5 px-3 w-4/12 text-left">Email</p>
                     <p class=" font-bold p-1 md:py-5 px-3 w-4/12 text-left">Nombre</p>
@@ -58,6 +58,6 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div>  --}}
     </body>
 </html>
