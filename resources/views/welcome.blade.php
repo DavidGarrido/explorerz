@@ -21,43 +21,51 @@
             }
         </style>
     </head>
-    <body>
-        <div class=" min-h-screen  p-3 md:p-28 text-gray-500">
-            @if (Route::has('login'))
-                <div class="block fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ route('dashboard') }}" class="text-sm text-gray-700 underline">Aula Virtual</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">{{__("Login")}}</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">{{__("Register")}}</a>
-                        @endif
+    <body class="h-screen">
+        <div class=" h-full flex items-center justify-center bg-gray-100  p-3 md:p-28 text-gray-500">
+            <div class="w-1/2 h-6/12 bg-white rounded-lg overflow-hidden flex">
+                <div class="w-1/2 p-3 flex flex-col justify-between">
+                    <h1 class="text-2xl font-bold py-4">Bienvenido al Aula Virtual</h1>
+                    <ul class=" flex flex-col gap-2 py-3 ">
+                        <li>Inscripciones.</li>
+                        <li>Postulaciones.</li>
+                        <li>Seguimiento de Actividades.</li>
+                        <li>Control parental.</li>
+                    </ul>
+                    <p class="text-xs">Los datos registrados en la plataforma estaran a disposición del administrador, al registrarte autorizas al centro educativo a usar tus datos.</p>
+                </div>
+                <div class="w-1/2 flex flex-col items-center justify-between p-3 bg-cover bg-center" style="background-image: url('./img/student-new.jpg')">
+                    <div class="w-full h-full flex items-center justify-center">               
+                        <img src="./img/logo_vector.png" class="w-48 object-cover" alt="">
+                    </div>
+                    @if (Route::has('login'))
+                        <div class="w-full">
+                            @auth
+                                <div class="flex flex-col gap-2">
+                                    <a href="{{ route('dashboard') }}" class="bg-blue-600 flex justify-center items-center text-white p-3 rounded-lg w-full hover:bg-blue-700">Ir al panel</a>
+                                    <!-- Authentication -->
+                                    <form method="POST" action="{{ route('logout') }}" class="flex justify-end">
+                                        @csrf
+            
+                                        <x-jet-dropdown-link href="{{ route('logout') }}"
+                                                            onclick="event.preventDefault();
+                                                                        this.closest('form').submit();">
+                                            {{ __('Logout') }}
+                                        </x-jet-dropdown-link>
+                                    </form>
+                                </div>
+                            @else
+                                <div class="flex flex-col gap-2">
+                                    <a href="{{ route('login') }}" class="bg-blue-600 flex justify-center items-center text-white p-3 rounded-lg w-full hover:bg-blue-700">{{__("Login")}}</a>
+    
+                                    @if (Route::has('register'))
+                                        <a href="{{ route('register') }}" class="bg-blue-600 flex justify-center items-center text-white p-3 rounded-lg w-full hover:bg-blue-700">{{__("Register")}}</a>
+                                    @endif
+                                </div>
+                            @endif
+                        </div>
                     @endif
                 </div>
-            @endif
-            {{--  <div class="w-full divide-y divide-gray-600 shadow-xl bg-gray-700 rounded-lg overflow-hidden">
-                <div class="flex flex-col md:flex-row justify-between  divide-x divide-gray-600 text-indigo-500" >
-                    <p class=" font-bold p-1 md:py-5 px-3 w-4/12 text-left">Email</p>
-                    <p class=" font-bold p-1 md:py-5 px-3 w-4/12 text-left">Nombre</p>
-                    <p class=" font-bold p-1 md:py-5 px-3 w-2/12 ">Rol</p>
-                    <p class=" font-bold p-1 md:py-5 px-3 w-2/12 ">Contraseña</p>
-                </div>
-                @foreach (App\Models\User::all() as $user)
-                    <div class="flex flex-col md:flex-row justify-between py-3 md:py-0 divide-x divide-gray-600 cursor-pointer hover:bg-gray-300" >
-                        <p class="py-1 md:py-5 px-3 w-4/12 text-left font-bold">{{$user->email}}</p>
-                        <p class="py-1 md:py-5 px-3 w-4/12 text-left">{{$user->name}}</p>
-                        <p class="py-1 md:py-5 px-3 w-2/12 ">
-                            @if (count($user->roles)>0)
-                                {{$user->roles[0]->name}}
-                            @else
-                                No definido                                
-                            @endif
-                        </p>
-                        <p class="py-1 md:py-5 px-3 w-2/12 ">Explorerz2020</p>
-                    </div>
-                @endforeach
             </div>
-        </div>  --}}
     </body>
 </html>
