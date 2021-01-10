@@ -23,11 +23,16 @@ class Create extends Component
     public $active = '';
     public $today, $utc_inicial, $utc_final,$show_init = null;
     public $schedule, $create_activity = false, $activity_day, $material = [], $title, $description, $start, $end, $tasks = [];
+    public $show_activity = false;
+    public $id_activity = '',$activity;
 
     protected $queryString = [
         "show"=>['except'=>''],
         "active"=>['except'=>''],
-        "show_init"
+        "show_init", 
+        'show_activity',
+        "id_activity" => ['except'=>''],
+        'create_activity'
     ];
     protected $listeners = ['show_course'];
 
@@ -57,6 +62,10 @@ class Create extends Component
         $this->utc_final = $this->utc_inicial+604800;
         if ($this->show_init == null) {
             $this->show_init = $this->utc_inicial;
+        }
+        // dd(count(Activity::find($this->id_activity)));
+        if ($this->id_activity != '' && count(Activity::Where('id',$this->id_activity)->get()) == 1) {
+            $this->activity = Activity::find($this->id_activity);
         }
 
     }
@@ -113,6 +122,11 @@ class Create extends Component
     public function all(){
         $this->show = 'all';
         $this->active = '';
+    }
+    public function view_activity(Activity $activity){
+        $this->show_activity = true;
+        $this->activity = $activity;
+        $this->id_activity = $activity->id;
     }
     public function activity_agree(Schedule $schedule, $day){
         $this->create_activity = true;
