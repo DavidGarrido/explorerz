@@ -14,4 +14,10 @@ class Activity extends Model
     public function schedule(){
         return $this->belongsToMany('App\Models\Schedule')->withTimestamps();
     }
+    
+    public function materials()
+    {
+        return $this->hasMany(Material::class);
+    }
+    
 }

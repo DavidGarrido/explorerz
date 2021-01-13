@@ -4,10 +4,12 @@ namespace App\Http\Livewire\Course;
 
 use App\Models\Activity;
 use App\Models\Course;
+use App\Models\Material;
 use App\Models\Model_course;
 use App\Models\Schedule;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 
 class Create extends Component
 {
@@ -31,8 +33,7 @@ class Create extends Component
         "active"=>['except'=>''],
         "show_init", 
         'show_activity',
-        "id_activity" => ['except'=>''],
-        'create_activity'
+        "id_activity" => ['except'=>'']
     ];
     protected $listeners = ['show_course'];
 
@@ -63,7 +64,7 @@ class Create extends Component
         if ($this->show_init == null) {
             $this->show_init = $this->utc_inicial;
         }
-        // dd(count(Activity::find($this->id_activity)));
+        
         if ($this->id_activity != '' && count(Activity::Where('id',$this->id_activity)->get()) == 1) {
             $this->activity = Activity::find($this->id_activity);
         }
@@ -143,12 +144,19 @@ class Create extends Component
         array_push($this->material, ['url' => null,'file' => null, 'description'=>null]);
     }
     public function remove_material($pos){
-        unset($this->material[$pos]);
+        $back = [];
+        for ($i=0; $i < count($this->material); $i++) { 
+            if ($i != $pos) {
+                array_push($back,$this->material[$i]);
+            }
+        }
+        $this->material = $back;
     }
     public function agg_tasks(){
         array_push($this->tasks, ['work' => null,'file' => 'yes','evaluate' => 'yes','points' => 5]);
     }
     public function cancel_activity(){
+        // dd('hola');
         $this->create_activity = false;
         $this->reset(['schedule','activity_day','title','description','start','end']);
         $this->material = [];
@@ -172,6 +180,20 @@ class Create extends Component
                 'day' => $day
             ]);
             $this->schedule->activities()->attach($activity);
+            foreach ($this->material as $material ) {
+                if ($material['url'] != null || $material['file'] != null) {
+                    $mat = Material::create([
+                        'activity_id' => $activity->id,
+                        'url' => $material['url'],
+                        'comments' => $material['description'],
+                    ]);
+                    if ($material['file'] != null) {                 
+                        $file = $material['file']->store('materials');
+                        $mat->file = $file;
+                        $mat->save();
+                    }
+                }
+            }
             $this->cancel_activity();
             
         } catch (\Throwable $th) {

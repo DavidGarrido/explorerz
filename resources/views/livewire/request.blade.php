@@ -1,4 +1,4 @@
-<div class="h-full">
+<div class="w-full overflow-auto justify-end gap-2 relative h-full bg-white rounded-bl-xl rounded-br-xl px-3">
     <p class="text-xl w-full h-1/12 flex items-center px-3 font-bold">Solicitudes</p>
     <div class="h-1/12 bg-gray-200 w-full flex font-bold">
         <p class="w-1/12 px-3 flex items-center">Nombre</p>

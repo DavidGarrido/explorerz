@@ -29,7 +29,7 @@
         <script src="https://kit.fontawesome.com/2c36e9b7b1.js" crossorigin="anonymous"></script>
     </head>
     <body class="font-sans overflow-hidden text-gray-500">
-        <div class="h-screen bg-gray-100 grid grid-rows-template">
+        <div class="h-screen bg-gray-100 ">
                 @livewire('navigation-dropdown')
             <!-- Page Heading -->
             {{-- <header class="bg-white shadow">
@@ -39,7 +39,7 @@
             </header> --}}
 
             <!-- Page Content -->
-            <main id="content" class="bg-gray-200 h-full flex">
+            <main id="content" class="bg-red-200 h-full flex ">
                 {{ $slot }}
             </main>
             {{--  <div class="flex">
@@ -50,7 +50,7 @@
             </div>  --}}
         </div>
 
-        @stack('modals')
+        {{-- @stack('modals') --}}
 
         @livewireScripts
     </body>

@@ -1,4 +1,4 @@
-<div class=" w-full   h-full " x-data="{open: @if(isset($student->id)) true @else false @endif}">
+<div class="w-full overflow-auto justify-end gap-2 relative h-full bg-white rounded-bl-xl rounded-br-xl px-3" x-data="{open: @if(isset($student->id)) true @else false @endif}">
     <div x-show="open" class="w-full bg-black fixed inset-0 h-screen bg-opacity-50 flex items-center justify-center">
         <div class="bg-white shadow-md w-1/2">
                 @if (isset($student->id))

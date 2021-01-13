@@ -1,4 +1,4 @@
-<div class="w-full h-full ">
+<div class="w-full overflow-auto justify-end gap-2 relative h-full bg-white rounded-bl-xl rounded-br-xl px-3">
     
     <p class="text-2xl font-bold h-1/12 flex items-center px-5">Profesores</p>
     <div class="w-full h-1/12 px-5 font-bold flex  items-center bg-gray-200 shadow-md">
