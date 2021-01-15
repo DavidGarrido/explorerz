@@ -23,17 +23,21 @@ class Create extends Component
     public $show= 'all';
     public $course;
     public $active = '';
-    public $today, $utc_inicial, $utc_final,$show_init = null;
+    public $today, $utc_inicial, $utc_final,$showInit = null;
     public $schedule, $create_activity = false, $activity_day, $material = [], $title, $description, $start, $end, $tasks = [];
     public $show_activity = false;
     public $id_activity = '',$activity;
+    public $filter = 'day';
+    public $day;
 
     protected $queryString = [
         "show"=>['except'=>''],
         "active"=>['except'=>''],
-        "show_init", 
+        "showInit", 
         'show_activity',
-        "id_activity" => ['except'=>'']
+        "id_activity" => ['except'=>''],
+        "filter",
+        "day" => ['except' => '']
     ];
     protected $listeners = ['show_course'];
 
@@ -61,14 +65,16 @@ class Create extends Component
         $this->today = time();
         $this->utc_inicial = $this->today-(date('N')*86400)-((date('G')*3600)+(date('i')*60)+date('s'));
         $this->utc_final = $this->utc_inicial+604800;
-        if ($this->show_init == null) {
-            $this->show_init = $this->utc_inicial;
+        if ($this->showInit == null) {
+            $this->showInit = $this->utc_inicial;
+        }
+        if ($this->day == null) {
+            $this->day = $this->utc_inicial + (86400*intval(date('N')));
         }
         
         if ($this->id_activity != '' && count(Activity::Where('id',$this->id_activity)->get()) == 1) {
             $this->activity = Activity::find($this->id_activity);
         }
-
     }
     public function create(){
 
@@ -80,8 +86,7 @@ class Create extends Component
             $course->users()->attach(auth()->user()->id);
             $this->allcourses = auth()->user()->courses;
     }
-    public function dimension_name($id)
-    {        
+    public function dimension_name($id){        
         switch($id){
             case  1: return 'Corporal'; break;
             case  2: return 'Cognitiva'; break;
@@ -114,7 +119,28 @@ class Create extends Component
             return ($hour-12).' p.m';
         }
     }
-
+    public function updatedShowInit($value){
+        $this->day = $value+86400;
+    }
+    public function incrementDay(){
+        $this->day += 86400;
+        if (date('N',$this->day) == 7) {
+            $this->day +=86400;
+        }
+        if ($this->day >= ($this->showInit +604800)) {
+            $this->showInit += 604800;
+        }
+    }
+    public function decrementDay(){
+        $this->day -= 86400;
+        if (date('N',$this->day) == 7) {
+            $this->day -=86400;
+        }
+        if ($this->day < $this->showInit) {
+            $this->showInit -= 604800;
+            // dd($this->showInit-604800);
+        }
+    }
     public function show_course($course){
         $this->course = Course::find($course);
         $this->active = $course;

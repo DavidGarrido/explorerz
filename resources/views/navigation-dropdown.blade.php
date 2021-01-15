@@ -1,12 +1,11 @@
 <nav x-data="{ open: false }" class="bg-white ">
     <!-- Primary Navigation Menu -->
     <div class="w-full">
-        <div class=" bg-blue-700 pr-3 flex justify-between  h-16 pt-3">
-            <div class="flex ">
+        <div class=" bg-blue-700 pr-3 flex justify-between  h-16 pt-3 pl-3 lg:pl-0">
+            <div class="lg:flex hidden">
                 <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center  w-64">
                     <a href="{{ route('dashboard') }}">
-                        {{--  <x-jet-application-mark class="block h-9 w-auto" />  --}}
                         <p class="text-white font-bold text-2xl p-3">Explorerz</p>
                     </a>
                 </div>

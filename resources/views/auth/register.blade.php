@@ -2,7 +2,7 @@
     <x-jet-authentication-card>
         <x-slot name="logo">
             {{--  <x-jet-authentication-card-logo />  --}}            
-            <img src="./img/logo_vector.png" alt="logo" class="w-52">
+            <img src="./img/logo_vector.png" alt="logo" class="w-32 xl:w-52">
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

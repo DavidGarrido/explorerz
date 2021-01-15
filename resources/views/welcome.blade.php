@@ -22,8 +22,8 @@
         </style>
     </head>
     <body class="h-screen">
-        <div class=" h-full flex items-center justify-center bg-gray-100  p-3 md:p-28 text-gray-500">
-            <div class="w-1/2 h-6/12 bg-white rounded-lg overflow-hidden flex">
+        <div class=" h-full flex items-center justify-center bg-gray-100  p-3 xl:p-28 text-gray-500">
+            <div class="w-3/4 xl:w-1/2 h-10/12 xl:h-6/12 bg-white rounded-lg overflow-hidden flex">
                 <div class="w-1/2 p-3 flex flex-col justify-between">
                     <h1 class="text-2xl font-bold py-4">Bienvenido al Aula Virtual</h1>
                     <ul class=" flex flex-col gap-2 py-3 ">

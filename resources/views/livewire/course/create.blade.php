@@ -1,11 +1,62 @@
-<div class="w-full overflow-auto justify-end gap-2 relative h-full bg-white rounded-bl-xl rounded-br-xl px-3">
+<div class="w-full overflow-auto justify-end gap-2 relative h-full bg-white rounded-bl-xl rounded-br-xl ">
     <div class="fixed bg-black bg-opacity-25 z-50 inset-0 w-full flex justify-center items-center transform scale-0" wire:loading.class="transform scale-100">
         <p class="text-red-500">Cargando...</p>
     </div>
     
     {{auth()->user()->parent}}
+    @switch($show)
+        @case('all')
+            @can('haveaccess', 'course.create')
+                <div class="flex justify-start items-start gap-3 p-3 flex-wrap">
+                    <select wire:model="model" class="p-2 outline-none rounded-md">
+                        @foreach ($models as $model)
+                            <option value="{{$model->id}}">{{$model->group}}</option>
+                        @endforeach
+                    </select>
+                    <div class="flex gap-2 p-3 items-center bg-white rounded-lg">
+                        <label for="color">Color:</label>
+                        <input type="color" wire:model="color" id="color" class="rounded-md outline-none">
+                        <p>
+                            {{$color}}
+                        </p>
+                    </div>
+                    @error('title')
+                        <p class="text-red-600">{{$message}}</p>    
+                    @enderror
+                    @error('description')
+                        <p class="text-red-600">{{$message}}</p>
+                    @enderror
+                    <button class="bg-gray-800 hover:bg-gray-900 p-2 rounded-md text-white w-40" wire:click="create">Crear</button>  
+                </div>
+            @endcan
+            @if (!$show_activity)
+                <div class="w-full p-3 rounded-lg h-2/12 overflow-hidden">
+                    <h1 class="text-xl">Mis Cursos</h1>
+                    @if (count($allcourses) > 0)
+                        <div class="flex flex-wrap gap-2">
+                            @foreach ($allcourses as $course)
+                                <div style="background-color: {{$course->color}}" class="text-white p-2 cursor-pointer  rounded-lg shadow-lg" wire:click="show_course({{$course->id}})">
+                                    <p class="font-bold  p-2 ">{{$course->model->group}}</p>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="py-5">No tienes cursos asignados.</p>          
+                    @endif
+                </div>                 
+            @endif
+                        
+            @break
+        @case('course')
+            <a class=" fixed top-0 left-64  h-16 text-gray-500 flex gap-2 p-3 pt-6 items-center justify-center font-bold" href="#" wire:click.prevent="all">
+                <i class="fas fa-angle-left"></i>
+                Atras
+            </a>
+            @livewire('course.show', ['course' => $course], key($course->id))
+            @break;
+    @endswitch
     @if ($show_activity == false && (auth()->user()->roles[0]->id == 2 || auth()->user()->roles[0]->id == 4) && $show == 'all' )
-        <div class="h-1/12 flex gap-3 p-3 items-center w-full">
+        <div class="h-1/12 flex justify-between p-3 w-full">
             @php
                 if(date('L')){
                     $dias = 366;
@@ -14,12 +65,29 @@
                 }
                 $limit = $utc_final+(($dias-(gmdate('z',$utc_final)+1))*86400);
             @endphp
-            <p>Semana:</p>
-            <select wire:model="show_init" class="p-2 rounded-md outline-none border borde-gray-200">
-                @for ($i = $utc_inicial; $i < $limit; $i+=604800)
-                    <option value="{{$i}}">{{date('d',$i).' '.__(date('F',$i)).' '.date('Y',$i)}} - {{date('d',($i+604800)).' '.__(date('F',($i+604800))).' '.date('Y',($i+604800))}}</option>
-                @endfor
-            </select>
+            <p class="font-bold">Horario de Clases</p>
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-3">
+                    <p>Semana:</p>
+                    <select wire:model="showInit" class="p-2 rounded-md outline-none border borde-gray-200">
+                        @for ($i = $utc_inicial; $i < $limit; $i+=604800)
+                            <option value="{{$i}}">{{date('d',$i+86400).' '.__(date('F',$i+86400)).' '.date('Y',$i+86400)}} - {{date('d',($i+518400)).' '.__(date('F',($i+518400))).' '.date('Y',($i+518400))}}</option>
+                        @endfor
+                    </select>
+                </div>
+                <div class="flex items-center gap-3">
+                    @if ($filter == 'week')                    
+                        <div class="p-3 border rounded-md cursor-pointer hover:bg-gray-200 hover:text-gray-700" wire:click="$set('filter','day')">
+                            <i class="fas fa-calendar-day cursor-pointer text-xl"></i>
+                        </div>
+                    @endif
+                    @if ($filter == 'day')                    
+                        <div class="p-3 border rounded-md cursor-pointer hover:bg-gray-200 hover:text-gray-700" wire:click="$set('filter','week')">
+                            <i class="fas fa-calendar-week cursor-pointer text-xl"></i>
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>        
     @endif
 
@@ -29,7 +97,7 @@
                 if($show_activity){
                     $height = 'h-full';                    
                 }else{
-                    $height = 'h-7/12';
+                    $height = 'h-9/12';
                 }
             @endphp
             <div class="flex gap-2 {{$height}}" x-data="{create_activity:@if($create_activity) true @else false @endif}">
@@ -167,33 +235,79 @@
                             </div>
                         @endif
                     </div> 
-                    @for ($i = $show_init+86400; $i < ($show_init+604800); $i+=86400)
-                        <div class="w-full flex flex-col rounded-lg shadow-sm bg-white h-full">
-                            <div class="w-full flex items-center justify-center  h-1/12">
-                                <p class="p-3">{{__(date('l',$i))}} - {{date('d',$i)}} </p>
+                    @if ($filter == 'week')                        
+                        @for ($i = $showInit+86400; $i < ($showInit+604800); $i+=86400)
+                            <div class="w-full flex flex-col rounded-lg shadow-sm bg-white h-full">
+                                <div class="w-full flex items-center justify-center  h-1/12 ">
+                                    <p class="p-3">{{__(date('l',$i))}} - {{date('d',$i)}} </p>
+                                </div>
+                                <div class="w-full h-11/12 overflow-auto p-1">
+                                    @foreach (auth()->user()->schedule->where('day', date('N',$i))->sortBy('start') as $schedule)
+                                        <div class="flex flex-col relative rounded-lg overflow-hidden px-2 py-1 mb-1 border" style="border-color: {{$schedule->courses[0]->color}}">
+                                            <div class="absolute text-xs text-white px-2 rounded-full top-2 right-2" style="background-color: {{$schedule->courses[0]->color}}">
+                                                <p class="p-1 w-full">{{$schedule->courses[0]->model->group}}</p>
+                                            </div>
+                                            <p class="p-1 w-full">{{$this->hour($schedule->start)}}</p>
+                                            <p class="p-1 w-full">{{$this->dimension_name($schedule->dimension)}}</p>
+                                            <div class="flex flex-col">
+                                                <p style="color: {{$schedule->courses[0]->color}}">Actividades</p>
+                                                @foreach ($schedule->activities()->where('day',($i+($schedule->start*3600)))->get() as $item)
+                                                    <p class="underline cursor-pointer" wire:click="view_activity({{$item->id}})">{{$item->name}}</p>
+                                                @endforeach
+                                            </div>
+                                            <div class="flex justify-end items-center">
+                                                <a href="#" wire:click.prevent="activity_agree({{$schedule->id}},{{$i}})" class="text-xs underline" style="color:{{$schedule->courses[0]->color}}">Agregar Actividad</a>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
                             </div>
-                            <div class="w-full h-11/12 overflow-auto p-1">
-                                @foreach (auth()->user()->schedule->where('day', date('N',$i))->sortBy('start') as $schedule)
-                                    <div class="flex flex-col relative rounded-lg overflow-hidden px-2 py-1 mb-1 border" style="border-color: {{$schedule->courses[0]->color}}">
-                                        <div class="absolute text-xs text-white px-2 rounded-full top-2 right-2" style="background-color: {{$schedule->courses[0]->color}}">
-                                            <p class="p-1 w-full">{{$schedule->courses[0]->model->group}}</p>
+                        @endfor                   
+                    @endif
+                    @if ($filter == 'day')
+                        <div class="h-full w-full flex flex-col">
+                            <div class="h-1/12 flex justify-between items-center p-3">
+                                @if($day > $utc_inicial)
+                                    <p class="px-3 py-1 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-200 hover:text-gray-700" wire:click="decrementDay">Anterior</p>
+                                @else
+                                    <div></div>
+                                @endif
+                                <p class="p-3">{{__(date('l',$day))}} - {{date('d',$day)}} de {{__(date('F',$day))}} del {{date('Y',$day)}} </p>
+                                <p class="px-3 py-1 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-200 hover:text-gray-700" wire:click="incrementDay">Siguiente</p>
+                            </div>
+                            <div class="w-full h-11/12 overflow-auto p-1 flex flex-col gap-2 ">
+                                {{--  @foreach (auth()->user()->schedule->where([['day', '=' ,date('N',$day)],['start','=',8]])->sortBy('start') as $schedule)  --}}
+                                @for ($i = 6; $i < 18; $i++)
+                                    @php
+                                        $schedule = auth()->user()->schedule()->where([['day', '=' ,date('N',$day)],['start','=',$i]])->first();
+                                    @endphp
+                                    @if (isset($schedule->id))
+                                        <div class="flex flex-col relative rounded-lg px-2 py-1 border" style="border-color: {{$schedule->courses[0]->color}}">
+                                            <div class="absolute text-xs text-white px-2 rounded-full top-2 right-2" style="background-color: {{$schedule->courses[0]->color}}">
+                                                <p class="p-1 w-full">{{$schedule->courses[0]->model->group}}</p>
+                                            </div>
+                                            <p class="p-1 w-full">{{$this->hour($schedule->start)}}</p>
+                                            <p class="p-1 w-full">{{$this->dimension_name($schedule->dimension)}}</p>
+                                            <div class="flex flex-col">
+                                                <p style="color: {{$schedule->courses[0]->color}}">Actividades</p>
+                                                @foreach ($schedule->activities()->where('day',($day+($schedule->start*3600)))->get() as $item)
+                                                    <p class="underline cursor-pointer" wire:click="view_activity({{$item->id}})">{{$item->name}}</p>
+                                                @endforeach
+                                            </div>
+                                            <div class="flex justify-end items-center">
+                                                <a href="#" wire:click.prevent="activity_agree({{$schedule->id}},{{$day}})" class="text-xs underline" style="color:{{$schedule->courses[0]->color}}">Agregar Actividad</a>
+                                            </div>
+                                        </div> 
+                                    @else
+                                        <div class="border border-gray-200 p-2 flex flex-col rounded-lg">
+                                            <p>{{$this->hour($i)}}</p>
+                                            <p>Sin programación</p>                                        
                                         </div>
-                                        <p class="p-1 w-full">{{$this->hour($schedule->start)}}</p>
-                                        <p class="p-1 w-full">{{$this->dimension_name($schedule->dimension)}}</p>
-                                        <div class="flex flex-col">
-                                            <p style="color: {{$schedule->courses[0]->color}}">Actividades</p>
-                                            @foreach ($schedule->activities()->where('day',($i+($schedule->start*3600)))->get() as $item)
-                                                <p class="underline cursor-pointer" wire:click="view_activity({{$item->id}})">{{$item->name}}</p>
-                                            @endforeach
-                                        </div>
-                                        <div class="flex justify-end items-center">
-                                            <a href="#" wire:click.prevent="activity_agree({{$schedule->id}},{{$i}})" class="text-xs underline" style="color:{{$schedule->courses[0]->color}}">Agregar Actividad</a>
-                                        </div>
-                                    </div>
-                                @endforeach
+                                    @endif                                   
+                                @endfor
                             </div>
                         </div>
-                    @endfor                   
+                    @endif
                 @endif    
             </div>             
         @endif
@@ -201,7 +315,7 @@
     @if (auth()->user()->roles[0]->id == 4 && $show == 'all')
         @if (!$show_activity)
             <div class="flex gap-2 h-7/12">
-                @for ($i = $show_init+86400; $i < ($show_init+604800); $i+=86400)
+                @for ($i = $showInit+86400; $i < ($showInit+604800); $i+=86400)
                     <div class="w-full flex flex-col border-2 border-gray-200 shadow-sm bg-white h-full">
                         <div class="w-full flex items-center justify-center bg-gray-200 h-1/12">
                             <p class="p-3">{{__(date('l',$i))}} - {{date('d',$i)}} </p>
@@ -286,56 +400,4 @@
     @foreach (auth()->user()->children as $student)
         <p>{{$student->courses}}</p>
     @endforeach
-    @switch($show)
-        @case('all')
-            @can('haveaccess', 'course.create')
-                <div class="flex justify-start items-start gap-3 p-3 flex-wrap">
-                    <select wire:model="model" class="p-2 outline-none rounded-md">
-                        @foreach ($models as $model)
-                            <option value="{{$model->id}}">{{$model->group}}</option>
-                        @endforeach
-                    </select>
-                    <div class="flex gap-2 p-3 items-center bg-white rounded-lg">
-                        <label for="color">Color:</label>
-                        <input type="color" wire:model="color" id="color" class="rounded-md outline-none">
-                        <p>
-                            {{$color}}
-                        </p>
-                    </div>
-                    @error('title')
-                        <p class="text-red-600">{{$message}}</p>    
-                    @enderror
-                    @error('description')
-                        <p class="text-red-600">{{$message}}</p>
-                    @enderror
-                    <button class="bg-gray-800 hover:bg-gray-900 p-2 rounded-md text-white w-40" wire:click="create">Crear</button>  
-                </div>
-            @endcan
-            @if (!$show_activity)
-                <div class="w-full p-3 rounded-lg  mt-3">
-                    <h1 class="text-xl">Mis Cursos</h1>
-                    @if (count($allcourses) > 0)
-                        <div class="flex flex-wrap gap-2">
-                            @foreach ($allcourses as $course)
-                                <div class="flex gap-3 w-52 h-52 divide-x divide-gray-200 items-center justify-center p-2 cursor-pointer  rounded-lg shadow-lg relative" wire:click="show_course({{$course->id}})">
-                                    <div class="absolute w-5 h-5 rounded-full top-2 right-2" style="background-color: {{$course->color}}"></div>
-                                    <p class="font-bold  p-2 ">{{$course->model->group}}</p>
-                                </div>
-                            @endforeach
-                        </div>
-                    @else
-                        <p class="py-5">No tienes cursos asignados.</p>          
-                    @endif
-                </div>                 
-            @endif
-                        
-            @break
-        @case('course')
-            <a class=" fixed top-0 left-64  h-16 text-gray-500 flex gap-2 p-3 pt-6 items-center justify-center font-bold" href="#" wire:click.prevent="all">
-                <i class="fas fa-angle-left"></i>
-                Atras
-            </a>
-            @livewire('course.show', ['course' => $course], key($course->id))
-            @break;
-    @endswitch
 </div>

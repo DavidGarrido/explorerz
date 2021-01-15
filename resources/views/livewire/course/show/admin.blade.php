@@ -20,8 +20,8 @@
             <p>{{ $course->model->dimensions()->pluck('name')->join(', ')}}.</p>
         </div>
     </div>
-    <div class="w-full flex flex-col lg:flex-row gap-5 my-3">
-        <div class="w-full lg:w-6/12 p-2 bg-white shadow-md">
+    <div class="w-full flex flex-col xl:flex-row gap-5 my-3">
+        <div class="w-full xl:w-6/12 p-2 bg-white shadow-md">
             @livewire('schedule.create', ['course' => $course])
             <div class="bg-white shadow-md p-3 w-full">
                 @if (isset($stripe->id))
@@ -31,7 +31,7 @@
                 @endif
             </div>  
         </div>
-        <div class="bg-white w-full lg:w-3/12 shadow-md p-2 flex flex-col">
+        <div class="bg-white w-full xl:w-3/12 shadow-md p-2 flex flex-col">
             <p class="text-xl py-3">Tutores activos</p>
             <div class="h-full">
                 @if (count($this_tutors)>0)
@@ -73,7 +73,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-white w-full lg:w-3/12 shadow-md p-2 flex flex-col">
+        <div class="bg-white w-full xl:w-3/12 shadow-md p-2 flex flex-col">
             <p class="text-xl">Estudiantes activos</p>
             <div class="h-full">
                 @if (count($this_students)>0)
