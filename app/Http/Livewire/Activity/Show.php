@@ -14,13 +14,12 @@ class Show extends Component
     public $activity;
     public $data_material;
     public $videos = [];
-    public $agreeMaterial;
+    public $video_selected;
 
-    protected $queryString = ['agreeMaterial'];
 
     public function mount(){
-        $this->agreeMaterial = false;
         $this->countVideos();
+        $this->agree_m();
     }
     public function countVideos(){
         $this->videos = [];
@@ -36,18 +35,23 @@ class Show extends Component
                 }
             }
         }
+        if (count($this->videos) > 0) {
+            $this->video_selected = $this->videos[0];
+        }
     }
     public function agree_m(){
-        $this->data_material = [null, null, null];
-        $this->agreeMaterial = true;
+        $this->data_material[0] = null;
+        $this->data_material[1] = null;
+        $this->data_material[2] = null;
     }
     public function cancel_m(){
         $this->data_material = [];
         $this->agreeMaterial = false;
     }
     public function save_material(){
+        // dd($this->data_material);
         try {
-            if ($this->data_material[0] != null || $this->data_material[1] != null) {
+            if ($this->data_material != null || $this->data_material[1] != null) {
                 $mat = Material::create([
                     'activity_id' => $this->activity->id,
                     'url' => $this->data_material[0],
@@ -59,10 +63,11 @@ class Show extends Component
                     $mat->save();
                 }
             }
-            $this->data_material = [null, null, null];
+            $this->data_material[0] = null;
+            $this->data_material[1] = null;
+            $this->data_material[2] = null;
             $activity = Activity::find($this->activity->id);
             $this->activity = $activity;
-            $this->agreeMaterial = false;
             $this->countVideos();
         } catch (\Throwable $th) {
             dd($th);
