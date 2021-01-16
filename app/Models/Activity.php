@@ -19,5 +19,8 @@ class Activity extends Model
     {
         return $this->hasMany(Material::class);
     }
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
     
 }

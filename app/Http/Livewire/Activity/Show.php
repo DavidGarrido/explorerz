@@ -13,31 +13,12 @@ class Show extends Component
 
     public $activity;
     public $data_material;
-    public $videos = [];
-    public $video_selected;
+    public $show_act = 'info';
 
+    protected $queryString = ['show_act'];
 
     public function mount(){
-        $this->countVideos();
         $this->agree_m();
-    }
-    public function countVideos(){
-        $this->videos = [];
-        foreach ($this->activity->materials as $material ) {
-            if (strstr($material->url,'https://youtu.be')){                
-                $id_video = explode( '.be/' , $material->url);
-                $this->videos[count($this->videos)] = $id_video[1];
-            }
-            if (strstr($material->url,'youtube.com')){
-                $id_video = explode('v=',$material->url);
-                if (count($id_video)>1){
-                    $this->videos[count($this->videos)] = $id_video[1];
-                }
-            }
-        }
-        if (count($this->videos) > 0) {
-            $this->video_selected = $this->videos[0];
-        }
     }
     public function agree_m(){
         $this->data_material[0] = null;

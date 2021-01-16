@@ -8,9 +8,22 @@
     <div class="h-11/12 flex">
         <div class="w-64 p-2 md:flex flex-col gap-1 hidden">  
             <div class="bg-gray-100 rounded-lg flex-1 flex flex-col justify-between p-2">
-                <div class="flex text-white rounded-md font-bold justify-between px-3 py-2" style="background-color: {{$activity->schedule[0]->courses[0]->color}}">
-                    <p>Videos</p>
-                    <p>{{count($videos)}}</p>
+                <div class="flex flex-col gap-1">
+                    <div class="flex rounded-md font-bold justify-between px-3 py-2 cursor-pointer hover:underline" @if($show_act == 'info') style="background-color: {{$activity->schedule[0]->courses[0]->color}}; color:white" @endif wire:click="$set('show_act','info')">
+                        <p>Descripción</p>
+                    </div>
+                    <div class="flex rounded-md font-bold justify-between px-3 py-2 cursor-pointer hover:underline" @if($show_act == 'video') style="background-color: {{$activity->schedule[0]->courses[0]->color}}; color:white" @endif wire:click="$set('show_act','video')">
+                        <p>Videos</p>
+                    </div>
+                    <div class="flex rounded-md font-bold justify-between px-3 py-2 cursor-pointer hover:underline" @if($show_act == 'img') style="background-color: {{$activity->schedule[0]->courses[0]->color}}; color:white" @endif wire:click="$set('show_act','img')">
+                        <p>Imagenes</p>
+                    </div>
+                    <div class="flex rounded-md font-bold justify-between px-3 py-2 cursor-pointer hover:underline" @if($show_act == 'docs') style="background-color: {{$activity->schedule[0]->courses[0]->color}}; color:white" @endif wire:click="$set('show_act','docs')">
+                        <p>Documentos</p>
+                    </div>
+                    <div class="flex rounded-md font-bold justify-between px-3 py-2 cursor-pointer hover:underline" @if($show_act == 'task') style="background-color: {{$activity->schedule[0]->courses[0]->color}}; color:white" @endif wire:click="$set('show_act','task')">
+                        <p>Tareas</p>
+                    </div>
                 </div>
                 <div class="flex flex-col gap-2 w-full py-3 bg-white p-1 rounded-lg">
                     <p>Agregar Material</p>
@@ -23,25 +36,25 @@
             </div>
         </div>
         <div class="flex-1 flex flex-col xl:flex-row p-2 overflow-auto">
-            <div class="w-full xl:w-1/2 flex flex-col">
-                <div class="flex flex-col h-0 overflow-hidden relative" style="padding-top: 56.25%">
-                    @if (count($videos) > 0)
-                        <div class="absolute inset-0">
-                            <iframe class="w-full h-full" src="https://www.youtube.com/embed/{{$video_selected}}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>                        
-                        </div>
-                    @endif
-                </div>
-                <div class="flex-1 py-2 overflow-auto">
-                    <div class="flex flex-wrap gap-3">
-                        @foreach ($videos as $video)                
-                            <div wire:click="$set('video_selected','{{$video}}')" class="cursor-pointer">
-                                <img src="https://img.youtube.com/vi/{{$video}}/default.jpg" alt="video" >
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+            <div class="h-full w-8/12">
+                @if ($show_act == 'video')
+                    @livewire('activity.show.video', ['activity' => $activity], key('activity'.$show_act))
+                @endif
+                @if ($show_act == 'info')
+                    @livewire('activity.show.info', ['activity' => $activity], key('activity'.$show_act))
+                @endif
+                @if ($show_act == 'img')
+                    @livewire('activity.show.img', ['activity' => $activity], key('activity'.$show_act))
+                @endif
+                @if ($show_act == 'docs')
+                    @livewire('activity.show.docs', ['activity' => $activity], key('activity'.$show_act))
+                @endif
+                @if ($show_act == 'task')
+                    @livewire('activity.show.task', ['activity' => $activity], key('activity'.$show_act))
+                @endif
             </div>
-            <div class="flex flex-wrap items-start justify-start w-1/2 px-2">
+            <div class="flex flex-wrap items-start justify-start w-4/12 px-2">
+                @livewire('activity.show.chat', ['activity' => $activity], key('activitychat'.$show_act))
             </div>
         </div>
     </div>
