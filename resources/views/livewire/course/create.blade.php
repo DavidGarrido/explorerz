@@ -100,7 +100,7 @@
                     $height = 'h-9/12';
                 }
             @endphp
-            <div class="flex gap-2 {{$height}}" x-data="{create_activity:@if($create_activity) true @else false @endif}">
+            <div class="flex gap-2 {{$height}}">
                 @if ($show_activity && isset($activity->id))  
                     <a style="color: {{$activity->schedule[0]->courses[0]->color}} " class="fixed top-0 left-64 h-16 text-white flex gap-2 items-center justify-center font-bold p-3 pt-6" href="#" wire:click.prevent="$set('show_activity', false)">
                         <i class="fas fa-angle-left"></i>
@@ -109,132 +109,134 @@
                     
                     @livewire('activity.show', ['activity' => $activity], key($activity->id))
                 @else
-                    <div class="fixed inset-0 bg-black bg-opacity-25 z-40 flex justify-center p-3 md:p-20 items-start" x-show="create_activity">
-                        @if (isset($schedule->start))
-                            <div class="bg-white w-full sm:w-3/4 xl:w-1/3 py-3 rounded-lg flex flex-col h-full">
-                                <div class="flex justify-between items-center h-1/12 p-3">
-                                    <p>Agregar Actividad</p>
-                                    <i class="fas fa-times cursor-pointer hover:text-gray-600 text-gray-400" wire:click="cancel_activity()"></i>
-                                </div>
-                                <div class="flex flex-col gap-3 px-3 h-10/12 overflow-auto">
-                                    <div class="flex justify-between items-center h-12 ">
-                                        <p style="color: {{$schedule->courses[0]->color}}" class="text-xl font-bold">{{$schedule->courses[0]->model->group}}</p>
-                                        <p>{{__(date('l',$activity_day))}} - {{date('d',$activity_day)}} de {{__(date('F',$activity_day))}}.</p>
+                    <div x-data="{create_activity:@if($create_activity) true @else false @endif}">
+                        <div class="fixed inset-0 bg-black bg-opacity-25 z-40 flex justify-center p-3 md:p-20 items-start" x-show="create_activity">
+                            @if (isset($schedule->start))
+                                <div class="bg-white w-full sm:w-3/4 xl:w-1/3 py-3 rounded-lg flex flex-col h-full">
+                                    <div class="flex justify-between items-center h-1/12 p-3">
+                                        <p>Agregar Actividad</p>
+                                        <i class="fas fa-times cursor-pointer hover:text-gray-600 text-gray-400" wire:click="cancel_activity()"></i>
                                     </div>
-                                    <div class="flex flex-col md:flex-row gap-3">
-                                        <div class="flex flex-col w-full md:w-1/2 gap-1 bg-gray-100 p-2 rounded-md">
-                                            <p class="text-gray-700 text-sm">Inicio de actividad:</p>
-                                            <input type="datetime-local" wire:model="start">
-                                            @error('start') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
+                                    <div class="flex flex-col gap-3 px-3 h-10/12 overflow-auto">
+                                        <div class="flex justify-between items-center h-12 ">
+                                            <p style="color: {{$schedule->courses[0]->color}}" class="text-xl font-bold">{{$schedule->courses[0]->model->group}}</p>
+                                            <p>{{__(date('l',$activity_day))}} - {{date('d',$activity_day)}} de {{__(date('F',$activity_day))}}.</p>
                                         </div>
-                                        <div class="flex flex-col w-full md:w-1/2 gap-1 bg-gray-100 p-2 rounded-md">
-                                            <p class="text-gray-700 text-sm">Fin de actividad:</p>
-                                            <input type="datetime-local" wire:model="end">
-                                            @error('end') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
+                                        <div class="flex flex-col md:flex-row gap-3">
+                                            <div class="flex flex-col w-full md:w-1/2 gap-1 bg-gray-100 p-2 rounded-md">
+                                                <p class="text-gray-700 text-sm">Inicio de actividad:</p>
+                                                <input type="datetime-local" wire:model="start">
+                                                @error('start') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
+                                            </div>
+                                            <div class="flex flex-col w-full md:w-1/2 gap-1 bg-gray-100 p-2 rounded-md">
+                                                <p class="text-gray-700 text-sm">Fin de actividad:</p>
+                                                <input type="datetime-local" wire:model="end">
+                                                @error('end') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
+                                            </div>
                                         </div>
-                                    </div>
-                                    <input type="text" wire:model="title" placeholder="Titulo de la Actividad" class="p-2 border border-gray-200 rounded-md">
-                                    @error('title') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
-                                    <div class="h-36 w-full">
-                                        <textarea wire:model="description" class="p-2 border border-gray-200 rounded-md h-full w-full" placeholder="Descripción de la actividad."></textarea>
-                                        @error('description') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
-                                    </div>
-                                    <div class="border border-gray-200 p-2 rounded-lg flex flex-col gap-2">
-                                        <div class="flex justify-between items-center">
-                                            <p style="color: {{$schedule->courses[0]->color}}">Material de apoyo.</p>
-                                            <a href="#" wire:click.prevent="agg_material()" class="text-xs text-right underline" style="color: {{$schedule->courses[0]->color}}">
-                                                <i class="fas fa-plus-circle text-2xl"></i>
-                                            </a>
+                                        <input type="text" wire:model="title" placeholder="Titulo de la Actividad" class="p-2 border border-gray-200 rounded-md">
+                                        @error('title') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
+                                        <div class="h-36 w-full">
+                                            <textarea wire:model="description" class="p-2 border border-gray-200 rounded-md h-full w-full" placeholder="Descripción de la actividad."></textarea>
+                                            @error('description') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
                                         </div>
-                                        @php
-                                            $continue = true;
-                                        @endphp
-                                        @if (count($materials)>0)                                
-                                            @for ($i = 0; $i < count($materials); $i++)                                        
-                                                <div class="flex flex-col gap-3">
-                                                    <div class="flex flex-col  gap-2">
-                                                        <input type="text" wire:model="material.{{$i}}.url" class="p-2 border border-gray-300 rounded-md flex-1 outline-none" placeholder="url">
-                                                        @if (strstr($material[$i]['url'], 'https://youtu.be/'))
-                                                        <iframe class="w-full" src="https://www.youtube.com/embed/lXzORt6FBqc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                        <div class="border border-gray-200 p-2 rounded-lg flex flex-col gap-2">
+                                            <div class="flex justify-between items-center">
+                                                <p style="color: {{$schedule->courses[0]->color}}">Material de apoyo.</p>
+                                                <a href="#" wire:click.prevent="agg_material()" class="text-xs text-right underline" style="color: {{$schedule->courses[0]->color}}">
+                                                    <i class="fas fa-plus-circle text-2xl"></i>
+                                                </a>
+                                            </div>
+                                            @php
+                                                $continue = true;
+                                            @endphp
+                                            @if (count($materials)>0)                                
+                                                @for ($i = 0; $i < count($materials); $i++)                                        
+                                                    <div class="flex flex-col gap-3">
+                                                        <div class="flex flex-col  gap-2">
+                                                            <input type="text" wire:model="material.{{$i}}.url" class="p-2 border border-gray-300 rounded-md flex-1 outline-none" placeholder="url">
+                                                            @if (strstr($material[$i]['url'], 'https://youtu.be/'))
+                                                            <iframe class="w-full" src="https://www.youtube.com/embed/lXzORt6FBqc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                                            @else
+                                                                <p>no es de youtube</p>
+                                                            @endif
+                                                        </div>
+                                                        @if ($materials[$i]['file']== null)                                                        
+                                                            <input type="file" wire:model="material.{{$i}}.file" accept="image/*,.pdf">
                                                         @else
-                                                            <p>no es de youtube</p>
+                                                            <p>Archivo cargado.</p>
                                                         @endif
-                                                    </div>
-                                                    @if ($materials[$i]['file']== null)                                                        
-                                                        <input type="file" wire:model="material.{{$i}}.file" accept="image/*,.pdf">
-                                                    @else
-                                                        <p>Archivo cargado.</p>
-                                                    @endif
-                                                    <textarea wire:model="material.{{$i}}.description" cols="30" rows="5" class="border border-gray-300 rounded-md outline-none p-2" placeholder="Comentarios"></textarea>
-                                                    <div class="flex justify-end">
-                                                        <a href="#" wire:click.prevent="remove_material({{$i}})" class="hover:underline" style="color: {{$schedule->courses[0]->color}}">Eliminar</a>
-                                                    </div>
-                                                </div>
-                                                @if ($materials[$i]['url'] == null && $materials[$i]['file'] == null)
-                                                    @php
-                                                        $continue = false;
-                                                    @endphp
-                                                @endif
-                                            @endfor
-                                        @else
-                                            <p class="w-full h-20 flex items-center justify-center">No tienes material de apoyo.</p>
-                                        @endif
-                                    </div>
-                                    <div class="border border-gray-200 p-2 rounded-lg flex flex-col gap-2">
-                                        <div class="flex justify-between items-center">
-                                            <h1 style="color: {{$schedule->courses[0]->color}}">Tareas:</h1>
-                                            <a href="#" wire:click.prevent="agg_tasks()" class="text-xs text-right underline" style="color: {{$schedule->courses[0]->color}}">
-                                                <i class="fas fa-plus-circle text-2xl"></i>
-                                            </a>
-                                        </div>
-                                        <div class="divide-y divide-gray-200">
-                                            @if (count($tasks) > 0)
-                                                @for ($i = 0; $i < count($tasks); $i++)
-                                                    <div class="py-3 flex flex-col gap-2">
-                                                        <p>Tarea {{$i+1}}</p>
-                                                        <textarea wire:model="tasks.{{$i}}.work" placeholder="Descripción" class="border border-gray-200 p-2 rounded-lg w-full h-32"></textarea>
-                                                        <div class="flex gap-2">
-                                                            <div class="flex gap-2 items-center w-4/12 rounded-full border border-gray-200 p-1">
-                                                                <p style="color: {{$schedule->courses[0]->color}}" class="text-sm">Evidencias:</p>
-                                                                <label for="yes{{$i}}">Si</label>
-                                                                <input type="radio" wire:model="tasks.{{$i}}.file" value="yes" id="yes{{$i}}" style="color: {{$schedule->courses[0]->color}}">
-                                                                <label for="no{{$i}}">No</label>
-                                                                <input type="radio" wire:model="tasks.{{$i}}.file" value="no" id="no{{$i}}" style="color: {{$schedule->courses[0]->color}}">
-                                                            </div>
-                                                            <div class="flex gap-2 items-center w-8/12 rounded-full border border-gray-200 p-1">
-                                                                <p style="color: {{$schedule->courses[0]->color}}" class="text-sm">Evaluable:</p>
-                                                                <label for="ev_yes{{$i}}">Si</label>
-                                                                <input type="radio" wire:model="tasks.{{$i}}.evaluate" value="yes" id="ev_yes{{$i}}" style="color: {{$schedule->courses[0]->color}}">
-                                                                <label for="ev_no{{$i}}">No</label>
-                                                                <input type="radio" wire:model="tasks.{{$i}}.evaluate" value="no" id="ev_no{{$i}}" style="color: {{$schedule->courses[0]->color}}">
-                                                                @if ($tasks[$i]['evaluate'] == 'yes')
-                                                                    <div class="flex flex-1 flex-wrap">
-                                                                        <p class="text-sm w-1/4">Max.</p>
-                                                                        <p class="w-3/4" style="color: {{$schedule->courses[0]->color}}">
-                                                                            {{$tasks[$i]['points']}}
-                                                                        </p>
-                                                                        <input class="w-full" type="range" wire:model="tasks.{{$i}}.points" min="0" max="5" step="0.1">
-                                                                    </div>
-                                                                @endif
-                                                            </div>
+                                                        <textarea wire:model="material.{{$i}}.description" cols="30" rows="5" class="border border-gray-300 rounded-md outline-none p-2" placeholder="Comentarios"></textarea>
+                                                        <div class="flex justify-end">
+                                                            <a href="#" wire:click.prevent="remove_material({{$i}})" class="hover:underline" style="color: {{$schedule->courses[0]->color}}">Eliminar</a>
                                                         </div>
                                                     </div>
+                                                    @if ($materials[$i]['url'] == null && $materials[$i]['file'] == null)
+                                                        @php
+                                                            $continue = false;
+                                                        @endphp
+                                                    @endif
                                                 @endfor
                                             @else
-                                                <p class="w-full h-20 flex items-center justify-center">No has programado tareas.</p>
+                                                <p class="w-full h-20 flex items-center justify-center">No tienes material de apoyo.</p>
                                             @endif
                                         </div>
+                                        <div class="border border-gray-200 p-2 rounded-lg flex flex-col gap-2">
+                                            <div class="flex justify-between items-center">
+                                                <h1 style="color: {{$schedule->courses[0]->color}}">Tareas:</h1>
+                                                <a href="#" wire:click.prevent="agg_tasks()" class="text-xs text-right underline" style="color: {{$schedule->courses[0]->color}}">
+                                                    <i class="fas fa-plus-circle text-2xl"></i>
+                                                </a>
+                                            </div>
+                                            <div class="divide-y divide-gray-200">
+                                                @if (count($tasks) > 0)
+                                                    @for ($i = 0; $i < count($tasks); $i++)
+                                                        <div class="py-3 flex flex-col gap-2">
+                                                            <p>Tarea {{$i+1}}</p>
+                                                            <textarea wire:model="tasks.{{$i}}.work" placeholder="Descripción" class="border border-gray-200 p-2 rounded-lg w-full h-32"></textarea>
+                                                            <div class="flex gap-2">
+                                                                <div class="flex gap-2 items-center w-4/12 rounded-full border border-gray-200 p-1">
+                                                                    <p style="color: {{$schedule->courses[0]->color}}" class="text-sm">Evidencias:</p>
+                                                                    <label for="yes{{$i}}">Si</label>
+                                                                    <input type="radio" wire:model="tasks.{{$i}}.file" value="yes" id="yes{{$i}}" style="color: {{$schedule->courses[0]->color}}">
+                                                                    <label for="no{{$i}}">No</label>
+                                                                    <input type="radio" wire:model="tasks.{{$i}}.file" value="no" id="no{{$i}}" style="color: {{$schedule->courses[0]->color}}">
+                                                                </div>
+                                                                <div class="flex gap-2 items-center w-8/12 rounded-full border border-gray-200 p-1">
+                                                                    <p style="color: {{$schedule->courses[0]->color}}" class="text-sm">Evaluable:</p>
+                                                                    <label for="ev_yes{{$i}}">Si</label>
+                                                                    <input type="radio" wire:model="tasks.{{$i}}.evaluate" value="yes" id="ev_yes{{$i}}" style="color: {{$schedule->courses[0]->color}}">
+                                                                    <label for="ev_no{{$i}}">No</label>
+                                                                    <input type="radio" wire:model="tasks.{{$i}}.evaluate" value="no" id="ev_no{{$i}}" style="color: {{$schedule->courses[0]->color}}">
+                                                                    @if ($tasks[$i]['evaluate'] == 'yes')
+                                                                        <div class="flex flex-1 flex-wrap">
+                                                                            <p class="text-sm w-1/4">Max.</p>
+                                                                            <p class="w-3/4" style="color: {{$schedule->courses[0]->color}}">
+                                                                                {{$tasks[$i]['points']}}
+                                                                            </p>
+                                                                            <input class="w-full" type="range" wire:model="tasks.{{$i}}.points" min="0" max="5" step="0.1">
+                                                                        </div>
+                                                                    @endif
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    @endfor
+                                                @else
+                                                    <p class="w-full h-20 flex items-center justify-center">No has programado tareas.</p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="h-1/12 px-3 flex justify-between items-center">
+                                        <a href="#" wire:click.prevent="cancel_activity()" class="text-xs text-right underline" style="color: {{$schedule->courses[0]->color}}">Cancelar</a>
+                                        @if ($continue)                                        
+                                            <button class="p-3 rounded-lg text-white" style="background-color: {{$schedule->courses[0]->color}}" wire:click="activity_store()">Crear</button>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="h-1/12 px-3 flex justify-between items-center">
-                                    <a href="#" wire:click.prevent="cancel_activity()" class="text-xs text-right underline" style="color: {{$schedule->courses[0]->color}}">Cancelar</a>
-                                    @if ($continue)                                        
-                                        <button class="p-3 rounded-lg text-white" style="background-color: {{$schedule->courses[0]->color}}" wire:click="activity_store()">Crear</button>
-                                    @endif
-                                </div>
-                            </div>
-                        @endif
-                    </div> 
+                            @endif
+                        </div> 
+                    </div>
                     @if ($filter == 'week')                        
                         @for ($i = $showInit+86400; $i < ($showInit+604800); $i+=86400)
                             <div class="w-full flex flex-col rounded-lg shadow-sm bg-white h-full">

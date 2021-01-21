@@ -30,6 +30,9 @@ Route::get('/migrate', function(){
         '--database' => 'mysql',
         '--force' => true));
 });
+Route::get('/img/{img_url}', function ($img_url){
+    return Storage::response('materials/'.$img_url);
+})->name('img');
 Route::middleware(['auth:sanctum', 'verified'])->get('/view/{user_id}/{file}', function ($user_id,$file){
     return Storage::response('hvs/'.$user_id.'/'.$file);
 })->name('viewer');

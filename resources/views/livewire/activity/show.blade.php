@@ -1,4 +1,4 @@
-<div class="w-full h-full p-3 flex flex-col" x-data="data_activity()">
+<div class="w-full h-full p-3 flex flex-col">
     <div class="fixed bg-black bg-opacity-25 z-50 inset-0 w-full flex justify-center items-center transform scale-0" wire:loading.class="transform scale-100">
         <p class="text-red-500">Cargando...</p>
     </div>
@@ -58,11 +58,4 @@
             </div>
         </div>
     </div>
-    <script>
-        function data_activity(){
-            return{
-                agreeMaterial:false
-            }
-        }
-    </script>
 </div>

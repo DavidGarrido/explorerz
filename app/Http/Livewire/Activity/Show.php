@@ -49,7 +49,7 @@ class Show extends Component
             $this->data_material[2] = null;
             $activity = Activity::find($this->activity->id);
             $this->activity = $activity;
-            $this->countVideos();
+            // $this->countVideos();
         } catch (\Throwable $th) {
             dd($th);
         }

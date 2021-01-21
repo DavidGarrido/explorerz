@@ -1,5 +1,5 @@
 <div class="w-full h-full flex flex-col">
-    <div class="h-11/12 flex flex-col justify-end overflow-auto">
+    <div class="h-11/12 flex flex-col  overflow-auto">
         @if (count($comments)>0)
             <div class="flex flex-col gap-2">
                 @foreach ($comments as $comment_user)
