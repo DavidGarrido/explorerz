@@ -2,6 +2,7 @@
     <div class=" w-full">
             <p class="text-2xl">
             @switch($stripe->dimension)
+                {{--  dimension  --}}
                 @case(1)  Corporal @break                                                
                 @case(2)  Cognitiva @break                                                
                 @case(3)  Comunicativa @break
@@ -32,6 +33,7 @@
         @endforeach
     </select>
     
-    <button wire:click="save" class="text-white p-3 rounded-md" style="background-color: {{$stripe->courses[0]->color}}">Guardar</button>
+    <div class="lds-ellipsis" wire:loading wire:target="teacher"><div style="background-color: {{$stripe->courses[0]->color}}"></div><div style="background-color: {{$stripe->courses[0]->color}}"></div><div style="background-color: {{$stripe->courses[0]->color}}"></div><div style="background-color: {{$stripe->courses[0]->color}}"></div></div>
+    {{--  <button wire:click="save" class="text-white p-3 rounded-md" style="background-color: {{$stripe->courses[0]->color}}">Guardar</button>  --}}
         
 </div>

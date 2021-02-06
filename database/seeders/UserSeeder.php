@@ -23,5 +23,13 @@ class UserSeeder extends Seeder
             'email_verified_at' => now()
         ]);
         $admin->roles()->attach(1);
+        $admin = User::create([
+            'name' => 'Lorena Suarez',
+            'email' => 'explorerz.educational@gmail.com',
+            'password' => '$2y$10$1Q5BNth7Rihj1gKjcjUEN.vturPuGsBqi3Dcc6238azR3Ee98GhC.',
+            'remember_token' => Str::random(10),
+            'email_verified_at' => now()
+        ]);
+        $admin->roles()->attach(1);
     }
 }

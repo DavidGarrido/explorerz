@@ -15,13 +15,14 @@ class Stripe extends Component
     public function mount(){
         $this->teacher = $this->stripe->user_id;
     }
+    public function updatedTeacher(){
+        $this->stripe->user_id = $this->teacher;
+        $this->stripe->save();
+        $this->refresh();
+    }
     public function refresh(){
         $stripe = Schedule::find($this->stripe->id);
         $this->stripe = $stripe;
-    }
-    public function save (){
-        $this->stripe->user_id = $this->teacher;
-        $this->stripe->save();
     }
     public function render()
     {
