@@ -25,14 +25,16 @@
                         <p>Tareas</p>
                     </div>
                 </div>
-                <div class="flex flex-col gap-2 w-full py-3 bg-white p-1 rounded-lg">
-                    <p>Agregar Material</p>
-                    <input type="text" wire:model.defer="data_material.0" placeholder="url" class="border border-gray-200 p-2 rounded-lg outline-none">
-                    <input type="file" wire:model = "data_material.1" accept="image/*,.pdf" id="material" class="hidden">
-                    <label for="material" class="p-2 border-dotted flex items-center justify-center text-sm rounded-lg border cursor-pointer hover:bg-gray-100" style="border-color: {{$activity->schedule[0]->courses[0]->color}};color:{{$activity->schedule[0]->courses[0]->color}}">Seleccionar Archivo</label>
-                    <textarea  wire:model.defer="data_material.2" placeholder="comentario" class="border border-gray-200 p-2 rounded-lg outline-none"></textarea class="border border-gray-200 p-2 rounded-lg outline-none">
-                    <button wire:click="save_material" class="text-white rounded-lg p-3" style="background-color: {{$activity->schedule[0]->courses[0]->color}}">Agregar</button>
-                </div>  
+                @if (auth()->user()->roles[0]->name == 'teacher')                    
+                    <div class="flex flex-col gap-2 w-full py-3 bg-white p-1 rounded-lg">
+                        <p>Agregar Material</p>
+                        <input type="text" wire:model.defer="data_material.0" placeholder="url" class="border border-gray-200 p-2 rounded-lg outline-none">
+                        <input type="file" wire:model = "data_material.1" accept="image/*,.pdf" id="material" class="hidden">
+                        <label for="material" class="p-2 border-dotted flex items-center justify-center text-sm rounded-lg border cursor-pointer hover:bg-gray-100" style="border-color: {{$activity->schedule[0]->courses[0]->color}};color:{{$activity->schedule[0]->courses[0]->color}}">Seleccionar Archivo</label>
+                        <textarea  wire:model.defer="data_material.2" placeholder="comentario" class="border border-gray-200 p-2 rounded-lg outline-none"></textarea class="border border-gray-200 p-2 rounded-lg outline-none">
+                        <button wire:click="save_material" class="text-white rounded-lg p-3" style="background-color: {{$activity->schedule[0]->courses[0]->color}}">Agregar</button>
+                    </div>  
+                @endif
             </div>
         </div>
         <div class="flex-1 flex flex-col xl:flex-row p-2 overflow-auto">

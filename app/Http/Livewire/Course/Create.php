@@ -7,6 +7,7 @@ use App\Models\Course;
 use App\Models\Material;
 use App\Models\Model_course;
 use App\Models\Schedule;
+use App\Models\Task;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Str;
@@ -179,7 +180,7 @@ class Create extends Component
         $this->material = $back;
     }
     public function agg_tasks(){
-        array_push($this->tasks, ['work' => null,'file' => 'yes','evaluate' => 'yes','points' => 5]);
+        array_push($this->tasks, ['work' => null,'file' => 'yes','evaluate' => 'yes','points' => 5, 'title' => null]);
     }
     public function cancel_activity(){
         // dd('hola');
@@ -219,6 +220,16 @@ class Create extends Component
                         $mat->save();
                     }
                 }
+            }
+            foreach ($this->tasks as $task) {
+                $tas = Task::create([
+                    'activity_id' => $activity->id,
+                    'title' => $task['title'],
+                    'description' => $task['work'],
+                    'evaluate' => $task['evaluate'],
+                    'punctuation' => $task['points'],
+                    'evidence'=>$task['file']
+                ]);
             }
             $this->cancel_activity();
             

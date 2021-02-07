@@ -6,7 +6,7 @@
         <i class="fas fa-times absolute top-5 right-5 cursor-pointer hover:text-gray-400" @click="open=false"></i>
         <p class="text-xl">Asistente</p>
         <div>
-            <p>¿Eres el asistente de uno de nuestros estudiantes?</p>
+            <p>¿Quires vincular un nuevo alumn@ o solicitar acceso para un@ ya matriculado?</p>
             <p>Solicita el acceso a nuestra plataforma y podras llevar el control del proceso de aprendizaje de el estudiante.</p>
         </div>
         <button wire:click="$emitTo('select-role','request',[3,1])" class="bg-blue-500 text-white rounded-lg p-3 hover:bg-blue-600">Solicitar Acceso</button>

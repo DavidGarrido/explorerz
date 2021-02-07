@@ -91,24 +91,10 @@
                 @endswitch
             </div>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 overflow-auto md:overflow-visible  w-full">
+        <div class="grid grid-cols-1 md:grid-cols-2 overflow-auto md:overflow-visible  w-1/2">
             <p class="col-start-1 col-end-2 md:col-end-4  text-center py-5 uppercase text-white roboto font-bold text-2xl">Gracias por tu registro.</p>
             <p class="col-start-1 col-end-w md:col-end-4 w-full text-center p-3 text-white"> Selecciona tu método de ingreso al <span class="font-bold">Aula Virtual</span></p>
 
-            <div class="flex justify-center xl:justify-end">
-                <div class="w-full m-3 md:w-56 h-96 rounded-lg shadow-xl bg-white overflow-hidden transition duration-300 ease-in-out transform md:hover:scale-110 ">
-                    <div class="h-6/12 w-full bg-gray-400 overflow-hidden">
-                        <img src="{{asset('img/student.jpg')}}" alt="students" class="w-full md:h-full  object-cover">
-                    </div>
-                    <p class="font-bold h-2/12 w-full flex items-center justify-center text-lg">Estudiante</p>
-                    <div class="h-2/12 w-full flex justify-center items-center py-1 px-2">
-                        <a href="#" wire:click.prevent="$set('show','registered-student')" class="bg-blue-500 text-white rounded-lg h-full w-full flex items-center justify-center cursor-pointer hover:bg-blue-600" @click="open=true">Matriculado</a>
-                    </div>
-                    <div class="h-2/12 w-full flex justify-center items-center py-1 px-2">
-                        <a href="#" wire:click.prevent="$set('show','new-student')" class="bg-orange-500 text-white rounded-lg h-full w-full flex items-center justify-center hover:bg-orange-600 cursor-pointer" @click="open=true">Nuevo</a>
-                    </div>
-                </div>
-            </div>
 
             <div class="flex justify-center">
                 <div class="w-full m-3 md:w-56 h-96 rounded-lg shadow-xl bg-white overflow-hidden transition duration-300 ease-in-out transform md:hover:scale-110">
@@ -125,13 +111,14 @@
                 </div>
             </div>
 
-            <div class="flex justify-center xl:justify-start">
+            <div class="flex justify-center">
                 <div class="w-full m-3 md:w-56 h-96 rounded-lg shadow-xl bg-white overflow-hidden transition duration-300 ease-in-out transform md:hover:scale-110">
                     <div class="h-6/12 w-full bg-gray-400 overflow-hidden">
                         <img src="{{asset('img/parents.jpg')}}" alt="parents" class="w-full md:h-full  object-cover">
                     </div>
-                    <p class="font-bold h-2/12 w-full flex items-center justify-center text-lg">Asistente</p>
-                    <div class="h-4/12 w-full flex justify-center items-center py-1 px-2">
+                    <p class="font-bold h-2/12 w-full flex items-center justify-center text-lg">Acudiente</p>
+                    <div class="h-4/12 w-full flex flex-col gap-2 justify-center items-center py-1 px-2">
+                        <p class="text-xs">Ingresa como acudiente y has el registro de estudiantes a tu cargo.</p>
                         <a href="#" wire:click.prevent="$set('show','guardian')" class="bg-blue-500 h-6/12 text-white rounded-lg  w-full flex items-center justify-center cursor-pointer hover:bg-blue-600" @click="open=true">Solicitar</a>
                     </div>
                     {{-- <div class="h-2/12 w-full flex justify-center items-center py-1 px-2">

@@ -134,6 +134,13 @@
                                 </div>
                             @endif                            
                         @endif
+                        @if ($one_request->user->parent_id > 0)
+                            
+                            <div class="flex gap-1 text-sm text-green-500 items-center">
+                                <i class="fas fa-check "></i>
+                                <p>{{$one_request->user->parent->name}}<br>{{$one_request->user->parent->email}}</p>
+                            </div>
+                        @endif
                     </div>
                     <div class="flex-1 px-3 flex items-center gap-3">
                         <button class="p-3 rounded-lg text-white bg-green-500" wire:click="accept({{$one_request}})">Aceptar</button>

@@ -2,8 +2,17 @@
     <div class="fixed bg-black bg-opacity-25 z-50 inset-0 w-full flex justify-center items-center transform scale-0" wire:loading.class="transform scale-100">
         <p class="text-red-500">Cargando...</p>
     </div>
-    
-    {{auth()->user()->parent}}
+    @if (auth()->user()->parent_id > 0)
+        <div class="p-3 flex items-center gap-3">
+            <div class="rounded-full overflow-hidden">
+                <img src="{{auth()->user()->parent->profile_photo_url}}" alt="parent avatar">
+            </div>
+            <div>
+                <p>{{auth()->user()->parent->email}}</p>
+                <p>Acudiente</p>
+            </div>
+        </div>        
+    @endif
     @switch($show)
         @case('all')
             @can('haveaccess', 'course.create')
@@ -134,10 +143,10 @@
                                                 @error('end') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
                                             </div>
                                         </div>
-                                        <input type="text" wire:model="title" placeholder="Titulo de la Actividad" class="p-2 border border-gray-200 rounded-md">
+                                        <input type="text" wire:model.defer="title" placeholder="Titulo de la Actividad" class="p-2 border border-gray-200 rounded-md">
                                         @error('title') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
                                         <div class="h-36 w-full">
-                                            <textarea wire:model="description" class="p-2 border border-gray-200 rounded-md h-full w-full" placeholder="Descripción de la actividad."></textarea>
+                                            <textarea wire:model.defer="description" class="p-2 border border-gray-200 rounded-md h-full w-full" placeholder="Descripción de la actividad."></textarea>
                                             @error('description') <p class="text-sm text-red-500">Campo Obligatorio.</p> @enderror
                                         </div>
                                         <div class="border border-gray-200 p-2 rounded-lg flex flex-col gap-2">
@@ -154,8 +163,11 @@
                                                 @for ($i = 0; $i < count($materials); $i++)                                        
                                                     <div class="flex flex-col gap-3">
                                                         <div class="flex flex-col  gap-2">
-                                                            <input type="text" wire:model="material.{{$i}}.url" class="p-2 border border-gray-300 rounded-md flex-1 outline-none" placeholder="url">
+                                                            <input type="text" wire:model.debounce.500ms="material.{{$i}}.url" class="p-2 border border-gray-300 rounded-md flex-1 outline-none" placeholder="url">
                                                             @if (strstr($material[$i]['url'], 'https://youtu.be/'))
+                                                            @php
+                                                                
+                                                            @endphp
                                                             <iframe class="w-full" src="https://www.youtube.com/embed/lXzORt6FBqc" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                                                             @else
                                                                 <p>no es de youtube</p>
@@ -193,6 +205,7 @@
                                                     @for ($i = 0; $i < count($tasks); $i++)
                                                         <div class="py-3 flex flex-col gap-2">
                                                             <p>Tarea {{$i+1}}</p>
+                                                            <input type="text" wire:model="tasks.{{$i}}.title" placeholder="Titulo" class="border border-gray-200 p-2 rounded-lg w-full">
                                                             <textarea wire:model="tasks.{{$i}}.work" placeholder="Descripción" class="border border-gray-200 p-2 rounded-lg w-full h-32"></textarea>
                                                             <div class="flex gap-2">
                                                                 <div class="flex gap-2 items-center w-4/12 rounded-full border border-gray-200 p-1">
