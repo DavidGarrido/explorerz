@@ -21,10 +21,10 @@
             }
         </style>
     </head>
-    <body class="h-screen">
+    <body class="h-screen ">
         <div class=" h-full flex items-center justify-center bg-gray-100  p-3 xl:p-28 text-gray-500">
-            <div class="w-3/4 xl:w-1/2 h-10/12 xl:h-6/12 bg-white rounded-lg overflow-hidden flex">
-                <div class="w-1/2 p-3 flex flex-col justify-between">
+            <div class="w-3/4 xl:w-1/2  bg-white rounded-lg overflow-hidden flex flex-col md:flex-row">
+                <div class="w-full md:w-1/2 p-3 flex flex-col justify-between">
                     <h1 class="text-2xl font-bold py-4">Bienvenido al Aula Virtual</h1>
                     <ul class=" flex flex-col gap-2 py-3 ">
                         <li>Inscripciones.</li>
@@ -34,8 +34,8 @@
                     </ul>
                     <p class="text-xs">Los datos registrados en la plataforma estaran a disposición del administrador, al registrarte autorizas al centro educativo a usar tus datos.</p>
                 </div>
-                <div class="w-1/2 flex flex-col items-center justify-between p-3 bg-cover bg-center" style="background-image: url('./img/student-new.jpg')">
-                    <div class="w-full h-full flex items-center justify-center">               
+                <div class="w-full md:w-1/2 flex flex-col items-center justify-between p-3 bg-cover bg-center" style="background-image: url('./img/student-new.jpg')">
+                    <div class="w-full h-full hidden md:flex items-center justify-center my-2"> 
                         <img src="./img/logo_vector.png" class="w-48 object-cover" alt="">
                     </div>
                     @if (Route::has('login'))
