@@ -7,6 +7,7 @@ use Livewire\Component;
 class Student extends Component
 {
     public $course;
+    
     public function render()
     {
         return view('livewire.course.show.student');
