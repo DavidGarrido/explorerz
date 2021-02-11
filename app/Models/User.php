@@ -100,4 +100,10 @@ class User extends Authenticatable
         return $this->hasMany(Request::class);
     }
     
+    public function evidences()
+    {
+        return $this->hasMany(Evidence::class);
+    }
+    
+    
 }

@@ -15,4 +15,11 @@ class Task extends Model
         return $this->belongsTo(Activity::class);
     }
     
+    public function evidences()
+    {
+        return $this->hasMany(Evidence::class);
+    }
+    
+    
+    
 }

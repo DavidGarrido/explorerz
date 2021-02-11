@@ -1,7 +1,7 @@
 <div class="w-full flex flex-col">
     <div class="flex flex-col gap-2">
         @foreach ($activity->tasks as $task)
-            @livewire('activity.show.one-task', ['task' => $task], key('task'.$task->id))
+            <livewire:activity.show.one-task :task="$task" :key="'task'.$loop->index">
         @endforeach
     </div>
     @if (auth()->user()->roles[0]->name == 'teacher')

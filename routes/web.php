@@ -40,6 +40,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/certificate/{user_id}/{fi
     return Storage::response('certificated/'.$user_id.'/last_certificated/'.$file);
     // return response('hola');
 })->name('certificate');
+Route::middleware(['auth:sanctum', 'verified'])->get('/evidences/{task}/{file}', function ($task,$file){
+    $file = Storage::response('evidences/'.$task.'/'.$file); 
+    // dd($file);
+    return $file;
+})->name('evidence');
 
 
 
