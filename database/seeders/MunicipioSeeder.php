@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\municipio;
+use App\Models\Municipio;
 use Illuminate\Database\Seeder;
 
 class MunicipioSeeder extends Seeder
