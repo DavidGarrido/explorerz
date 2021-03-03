@@ -238,6 +238,13 @@ class Create extends Component
         }
 
     }
+    public function delete_course(Course $course){
+        foreach ($course->schedule as $schedule ) {
+            $schedule->delete();
+        }
+        $course->delete();
+        $this->allcourses = auth()->user()->courses;
+    }
     public function render()
     {
         return view('livewire.course.create',[

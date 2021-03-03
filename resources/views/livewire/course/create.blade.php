@@ -18,6 +18,7 @@
             @can('haveaccess', 'course.create')
                 <div class="flex justify-start items-start gap-3 p-3 flex-wrap">
                     <select wire:model="model" class="p-2 outline-none rounded-md">
+                        {{--  comentario  --}}
                         @foreach ($models as $model)
                             <option value="{{$model->id}}">{{$model->group}}</option>
                         @endforeach
@@ -44,8 +45,13 @@
                     @if (count($allcourses) > 0)
                         <div class="flex flex-wrap gap-2">
                             @foreach ($allcourses as $course)
-                                <div style="background-color: {{$course->color}}" class="text-white p-2 cursor-pointer  rounded-lg shadow-lg" wire:click="show_course({{$course->id}})">
-                                    <p class="font-bold  p-2 ">{{$course->model->group}}</p>
+                                <div style="background-color: {{$course->color}}" class="text-white p-3 relative rounded-lg shadow-lg">
+                                    <p class="font-bold  p-2 cursor-pointer " wire:click="show_course({{$course->id}})">{{$course->model->group}}</p>
+                                    @can('haveaccess', 'course.delete')
+                                        <div class="absolute bg-black bg-opacity-75 w-4 h-4 rounded-full flex items-center justify-center top-1 right-1 text-xs text-gray-300 cursor-pointer transform hover:scale-105" wire:click="delete_course({{$course->id}})">
+                                            <i class="fas fa-times"></i>
+                                        </div>                                        
+                                    @endcan
                                 </div>
                             @endforeach
                         </div>

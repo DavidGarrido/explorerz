@@ -26,10 +26,18 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'name' => 'Lorena Suarez',
             'email' => 'explorerz.educational@gmail.com',
-            'password' => '$2y$10$1Q5BNth7Rihj1gKjcjUEN.vturPuGsBqi3Dcc6238azR3Ee98GhC.',
+            'password' => '$2y$10$RWC4uFYCFjJy4If6FevkruBxXlP7q8wWHj5ViqPm7q6K2M6ElxEVu',
             'remember_token' => Str::random(10),
             'email_verified_at' => now()
         ]);
         $admin->roles()->attach(1);
+        $profe = User::create([
+            'name' => 'Leonardo Sanchez',
+            'email' => 'leon@leon.com',
+            'password' => '$2y$10$1Q5BNth7Rihj1gKjcjUEN.vturPuGsBqi3Dcc6238azR3Ee98GhC.',
+            'remember_token' => Str::random(10),
+            'email_verified_at' => now()
+        ]);
+        $profe->roles()->attach(2);
     }
 }

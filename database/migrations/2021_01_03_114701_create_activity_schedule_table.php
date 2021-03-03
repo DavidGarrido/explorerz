@@ -17,7 +17,7 @@ class CreateActivityScheduleTable extends Migration
         Schema::create('activity_schedule', function (Blueprint $table) {
             $table->id();
             $table->foreignId('activity_id')->references('id')->on('activities');
-            $table->foreignId('schedule_id')->references('id')->on('schedules');
+            $table->foreignId('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
             $table->timestamps();
         });
     }

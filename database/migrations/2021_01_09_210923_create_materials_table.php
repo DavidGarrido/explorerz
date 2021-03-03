@@ -15,7 +15,7 @@ class CreateMaterialsTable extends Migration
     {
         Schema::create('materials', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('activity_id')->references('id')->on('activities');
+            $table->foreignId('activity_id')->references('id')->on('activities')->onDelete('cascade');
             $table->string('url')->nullable();
             $table->string('file')->nullable();
             $table->text('comments')->nullable();
