@@ -9,6 +9,8 @@ class Schedule extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['day','start', 'end', 'dimension', 'user_id'];
+
     public function courses (){
         return $this->belongsToMany('App\Models\Course')->withTimestamps();
     }

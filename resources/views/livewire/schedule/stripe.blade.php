@@ -1,4 +1,5 @@
 <div class="flex gap-3 items-center">
+    {{-- {{$stripe}} --}}
     <div class=" w-full">
             <p class="text-2xl">
             @switch($stripe->dimension)
@@ -32,6 +33,9 @@
             @endif
         @endforeach
     </select>
+
+    <input type="time" wire:model="end">
+    {{$end}}
     
     <div class="lds-ellipsis" wire:loading wire:target="teacher"><div style="background-color: {{$stripe->courses[0]->color}}"></div><div style="background-color: {{$stripe->courses[0]->color}}"></div><div style="background-color: {{$stripe->courses[0]->color}}"></div><div style="background-color: {{$stripe->courses[0]->color}}"></div></div>
     {{--  <button wire:click="save" class="text-white p-3 rounded-md" style="background-color: {{$stripe->courses[0]->color}}">Guardar</button>  --}}

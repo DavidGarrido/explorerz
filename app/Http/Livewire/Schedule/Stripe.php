@@ -10,6 +10,7 @@ class Stripe extends Component
 {
     public $stripe;
     public $teacher;
+    public $end;
 
     protected $listeners = ['refresh'];
     public function mount(){

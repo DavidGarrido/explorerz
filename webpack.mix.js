@@ -19,4 +19,4 @@ mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/main.scss', 'public/css')
     .webpackConfig(require('./webpack.config'));
 
-mix.browserSync('http://localhost:8081');
+mix.browserSync('http://localhost:8083');

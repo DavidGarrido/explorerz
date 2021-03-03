@@ -29,6 +29,7 @@ class Create extends Component
         $schedule = new Schedule;
         $schedule->day = $this->day;
         $schedule->start = $this->start;
+        $schedule->end = $this->start + 1;
         $schedule->dimension = $dim;
         $schedule->user_id = auth()->user()->id;
         $schedule->save();

@@ -27,7 +27,7 @@
                 @if (isset($stripe->id))
                     @livewire('schedule.stripe', ['stripe' => $stripe], key($stripe->id))
                 @else
-                    <p>Seleciona un item para asignar datos.</p>
+                    <p>Selecciona un item para asignar datos.</p>
                 @endif
             </div>  
         </div>
